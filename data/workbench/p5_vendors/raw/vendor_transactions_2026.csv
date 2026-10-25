@@ -1,0 +1,18 @@
+Source,Date,Vendor (as recorded),Amount,Account,Memo
+QBO bill,2026-07-02,Anthropic,"2,940.10",6410,API usage Jul
+QBO bill,2026-08-03,Anthropic,"3,212.55",6410,API usage Aug
+QBO bill,2026-09-02,Anthropic,"3,092.64",6410,API usage Sep
+Bank rule,2026-06-02,ANTHROPIC PBC ,"1,200.00",6410,Prepaid credits
+Ramp,2026-09-02,Claude,150.00,6410,Claude Pro team seats
+PayPal,2026-09-18,Claude,200.00,6410,Claude Max subscription
+QBO bill,2026-09-06,Anysphere,480.00,6410,Cursor Business Sept
+Ramp,2026-09-04,Cursor,480.00,6410,Cursor Business Sept
+Ramp,2026-09-03,Google Workspace,756.00,6410,Workspace seats
+Ramp,2026-09-08,Google Ads,"1,250.00",6420,Fall tour promo
+QBO bill,2026-01-15,Google,"4,000.00",6420,Annual ads credit
+QBO bill,2026-09-02,Amazon Web Services,"2,566.72",6450,AWS Sept
+Ramp,2026-02-12,AWS,312.00,6450,Marketplace AMI
+PayPal,2026-08-19,Splice,24.99,6410,Splice Sounds
+PayPal,2026-09-09,Splice.com,24.99,6410,Splice Sounds
+QBO bill,2026-09-08,Lumen Crew LLC,"14,963.00",5010,Lighting Aug
+Ramp,2026-09-12,Lumen Studios,600.00,6420,Promo photo shoot studio rental

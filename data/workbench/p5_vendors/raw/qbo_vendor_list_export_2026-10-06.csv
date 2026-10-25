@@ -1,0 +1,17 @@
+Vendor,Company Name,Email,Tax ID,Open Balance,Created,Created By
+Anthropic,"Anthropic, PBC",billing@anthropic.com,84-1234401,"3,092.64",2025-03-11,Dev Patel
+ANTHROPIC PBC ,,invoices@mail.anthropic.com,,0.00,2026-06-02,Bank rule
+Claude,,,,0.00,2026-09-02,Ramp sync
+Anysphere,"Anysphere, Inc.",ap@cursor.com,88-2214117,480.00,2025-11-20,Dev Patel
+Cursor,,,,0.00,2026-09-04,Ramp sync
+Google,Google LLC,collections@google.com,77-0493581,0.00,2024-08-01,Maya Chen
+Google Ads,,ads-noreply@google.com,,0.00,2026-09-08,Ramp sync
+Google Workspace,Google LLC,workspace-noreply@google.com,77-0493581,0.00,2025-01-15,Ramp sync
+Amazon Web Services,"Amazon Web Services, Inc.",aws-receivables@amazon.com,91-1646860,"2,566.72",2024-08-01,Maya Chen
+AWS,,no-reply@aws.amazon.com,,0.00,2026-02-12,Ramp sync
+Splice,"Splice.com, Inc.",billing@splice.com,46-3317982,0.00,2025-05-02,Dev Patel
+Splice.com,,billing@splice.com,,0.00,2026-09-09,PayPal rule
+Lumen Crew LLC,Lumen Crew LLC,ops@lumencrew.co,83-4419210,"14,963.00",2026-05-28,Dev Patel
+Lumen Studios,Lumen Studios SF LLC,bookings@lumenstudios.com,27-9031551,0.00,2026-09-12,Ramp sync
+Delta Air Lines,"Delta Air Lines, Inc.",,58-0218548,0.00,2024-08-01,Maya Chen
+Uber,"Uber Technologies, Inc.",,45-2647441,0.00,2024-08-01,Maya Chen

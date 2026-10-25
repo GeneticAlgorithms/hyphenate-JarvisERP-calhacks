@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JarvisERP · Synapse Trace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+<header id="top">
+  <div class="brand">
+    <div class="logo">J</div>
+    <div>
+      <div class="title">JarvisERP <span class="dim">· Synapse Trace</span></div>
+      <div class="subtitle" id="subtitle">Afterglow Labs, Inc. · September 2026 close</div>
+    </div>
+  </div>
+  <nav class="flow">
+    <button data-act="connect" title="Sync systems of record (raw → standardized → golden)">① Connect</button>
+    <button data-act="onboard" title="Learn policies from Jan–Aug history">② Learn</button>
+    <button data-act="close" class="primary" title="Run the September close">③ Close Sep</button>
+    <button data-act="controller" title="Let the Controller persona work her inbox">④ Controller</button>
+    <button data-act="october" title="October arrivals: invoices for September work">⑤ October</button>
+  </nav>
+  <div class="tools">
+    <button data-act="inject" class="accent">⚡ Scenario</button>
+    <select id="fault" title="Inject a PayPal API fault for the next sync">
+      <option value="">PayPal ✓</option>
+      <option value="flaky">PayPal: flaky</option>
+      <option value="ratelimit">PayPal: 429</option>
+      <option value="down">PayPal: down</option>
+    </select>
+    <button data-act="resync" title="Re-run the change-only sync (idempotent)">↻ Sync</button>
+    <button data-act="verify" title="Recompute the audit hash chain">⛓ Verify</button>
+    <button data-act="score" title="Compare to the planted answer key">◎ Score</button>
+    <button data-act="pack" title="Build the close evidence pack">🗂 Pack</button>
+    <label class="toggle" title="Controller persona auto-approves after each phase"><input type="checkbox" id="autoctl"> auto</label>
+    <button data-act="reset" class="ghost" title="Fresh world">⟲</button>
+  </div>
+</header>
+
+<main>
+  <aside id="left">
+    <section class="card">
+      <h3>Close cockpit</h3>
+      <div id="cockpit"></div>
+    </section>
+    <section class="card">
+      <h3>Four questions <span class="dim">(Hyphenate)</span></h3>
+      <ul class="four">
+        <li><b>World</b> · acts only through the Gateway on bank, PayPal, Ramp, docs, ledger</li>
+        <li><b>Time</b> · policies & precedents from Jan–Aug drive September; accruals true-up in October</li>
+        <li><b>Team</b> · Controller approves, answers, says no — Jarvis re-plans</li>
+        <li><b>Limits</b> · roles in code, requester ≠ approver, every call logged & hash-chained</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h3>Legend</h3>
+      <div class="legend" id="legend"></div>
+    </section>
+  </aside>
+
+  <section id="center">
+    <div id="layers">
+      <span>SYSTEMS · PEOPLE</span><span>SOURCE RECORDS · DOCS</span><span>POLICY · PRECEDENT · FX</span><span>DECISIONS</span><span>LEDGER · OUTCOMES</span>
+    </div>
+    <div id="graph"></div>
+    <div id="think"></div>
+    <div id="ticker"></div>
+  </section>
+
+  <aside id="right">
+    <div class="tabs">
+      <button data-tab="inbox" class="on">Inbox <span id="inboxN" class="pill">0</span></button>
+      <button data-tab="dossier">Dossier</button>
+      <button data-tab="policies">Policies</button>
+      <button data-tab="messages">Messages</button>
+      <button data-tab="audit">Audit</button>
+    </div>
+    <div class="tabbody" id="tab-inbox"></div>
+    <div class="tabbody hidden" id="tab-dossier"><div class="empty">Click any node in the graph.</div></div>
+    <div class="tabbody hidden" id="tab-policies"></div>
+    <div class="tabbody hidden" id="tab-messages"></div>
+    <div class="tabbody hidden" id="tab-audit"></div>
+  </aside>
+</main>
+
+<div id="modal" class="hidden"><div class="modal-card"><button class="x" onclick="closeModal()">×</button><div id="modal-body"></div></div></div>
+<div id="toasts"></div>
+
+<script src="/ui/vendor/3d-force-graph.min.js"></script>
+<script src="/ui/app.js"></script>
+</body>
+</html>

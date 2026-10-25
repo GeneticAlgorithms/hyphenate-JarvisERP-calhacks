@@ -1,0 +1,1 @@
+Controller ruling P-0317 (Mar 2026): personal purchases on company cards/PayPal go to 1250 Employee Receivable regardless of amount; notify the employee.

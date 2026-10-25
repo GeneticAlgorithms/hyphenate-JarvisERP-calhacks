@@ -1,0 +1,6 @@
+Ramp Vendor,Merchant Descriptor,Receipt Issuer,Receipt Domain,Suggested Action,ERP Vendor
+Claude,CLAUDE.AI SUBSCRIPTION,"Anthropic, PBC",anthropic.com,Create new vendor 'Claude',
+Cursor,CURSOR AI POWERED IDE,"Anysphere, Inc.",cursor.com,Create new vendor 'Cursor',
+Google Ads,GOOGLE *ADS4471029388,Google LLC,google.com,Create new vendor 'Google Ads',
+Lumen Studios,LUMEN STUDIOS SF,Lumen Studios SF LLC,lumenstudios.com,Create new vendor 'Lumen Studios',
+AWS,AWS EMEA MARKETPLACE,"Amazon Web Services, Inc.",aws.amazon.com,Create new vendor 'AWS',

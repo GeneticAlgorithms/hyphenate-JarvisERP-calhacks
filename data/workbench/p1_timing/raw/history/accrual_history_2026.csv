@@ -1,0 +1,6 @@
+period,vendor,method,accrued,actual_invoice,invoice_received,notes
+2026-06,Lumen Crew LLC,rate x timesheet,"11,020.00","12,250.00",2026-07-08,after-hours premium
+2026-07,Lumen Crew LLC,rate x timesheet,"12,825.00","14,240.00",2026-08-07,
+2026-08,Lumen Crew LLC,rate x timesheet,"13,450.00","14,963.00",2026-09-08,
+2026-07,Nadia Kroll,flat fee,"2,500.00","2,250.00",2026-08-30,"controller corrected: Nadia texted $2,250"
+2026-02,Nadia Kroll,flat fee,"1,800.00","1,800.00",2026-04-02,invoice 47 days late

@@ -1,0 +1,14 @@
+﻿Date,Time,TimeZone,Name,Type,Status,Currency,Gross,Fee,Net,From Email Address,To Email Address,Transaction ID,Item Title,Reference Txn ID,Balance Impact
+09/09/2026,09:28:00,America/Los_Angeles,,Bank Deposit to PP Account,Completed,USD,"2,262.21",0.00,"2,262.21",,,16F12036174027107,,,Credit
+09/09/2026,10:05:01,America/Los_Angeles,Damlicht Crew B.V.,General Payment,Completed,EUR,"-1,800.00",0.00,"-1,800.00",ap@afterglowlabs.com,billing@damlicht.nl,8AF529710FA489324,Crew fee Amsterdam 13 Sep,,Debit
+09/09/2026,10:05:01,America/Los_Angeles,,General Currency Conversion,Completed,USD,"-2,237.22",0.00,"-2,237.22",,,33E727668ED704645,,8AF529710FA489324,Debit
+09/09/2026,10:05:01,America/Los_Angeles,,General Currency Conversion,Completed,EUR,"1,800.00",0.00,"1,800.00",,,48386339566115370,,8AF529710FA489324,Credit
+09/09/2026,18:29:27,America/Los_Angeles,Splice.com,PreApproved Payment Bill User Payment,Completed,USD,-24.99,0.00,-24.99,ap@afterglowlabs.com,billing@splice.com,BB999784197763884,Splice Sounds subscription,,Debit
+09/18/2026,09:22:15,America/Los_Angeles,Kraftwerk Rigging GmbH,General Payment,Completed,EUR,"-2,950.00",0.00,"-2,950.00",ap@afterglowlabs.com,billing@kraftwerk-rigging.de,6B5301917A2670494,Deposit rigging Berlin 14 Nov,,Debit
+09/18/2026,09:22:15,America/Los_Angeles,,General Currency Conversion,Completed,USD,"-3,599.00",0.00,"-3,599.00",,,F596647782A987131,,6B5301917A2670494,Debit
+09/18/2026,09:22:15,America/Los_Angeles,,General Currency Conversion,Completed,EUR,"2,950.00",0.00,"2,950.00",,,802659060E0457522,,6B5301917A2670494,Credit
+09/18/2026,09:58:35,America/Los_Angeles,Valve Corporation,Express Checkout Payment,Completed,USD,-113.44,0.00,-113.44,j.ortiz@afterglowlabs.com,noreply@steampowered.com,C15807984D0797968,Steam purchase,,Debit
+09/18/2026,10:28:29,America/Los_Angeles,"Anthropic, PBC",PreApproved Payment Bill User Payment,Completed,USD,-200.00,0.00,-200.00,ap@afterglowlabs.com,billing@anthropic.com,8971295127F968416,Claude Max subscription,,Debit
+09/18/2026,14:48:00,America/Los_Angeles,,Bank Deposit to PP Account,Completed,USD,"3,912.44",0.00,"3,912.44",,,DCE43434786208450,,6B5301917A2670494,Credit
+09/24/2026,11:02:00,America/Los_Angeles,,Bank Deposit to PP Account,Completed,USD,"1,000.00",0.00,"1,000.00",,,DDC08676432295501,,,Credit
+09/26/2026,16:40:12,America/Los_Angeles,Kai Mendes,General Payment,Completed,USD,-640.00,0.00,-640.00,ap@afterglowlabs.com,kai@kaimendes.art,4K2207731MN090317,VJ assist - Oakland 25 Sep,,Debit

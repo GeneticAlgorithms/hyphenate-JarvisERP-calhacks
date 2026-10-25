@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JarvisERP — Autonomous Staff Accountant</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ui/wb.css">
+</head>
+<body class="landing-page">
+<script>document.body.classList.add('landing-page');</script>
+<header class="top">
+  <div class="brand">
+    <div class="mark"><i></i><i></i><i></i><i></i></div>
+    <div class="name">Jarvis<span>ERP</span></div>
+    <div class="sub">Autonomous Staff Accountant for Afterglow Labs</div>
+  </div>
+  <div class="topright">
+    <a class="ghost on" href="/">Launch Workbench →</a>
+  </div>
+</header>
+
+<main class="landing">
+  <section class="hero-landing">
+    <h1>The Moment</h1>
+    <p class="lead">September bank feed: one line, <code>PAYPAL INST XFER DCE4343478 ... −$3,912.44</code></p>
+    <p>A rules-based system books this as <strong>"PayPal — Software Expense $3,912.44"</strong></p>
+    <p class="lead">Jarvis does this instead:</p>
+    <div class="moment-box">
+      <ul>
+        <li><strong>Solves subset-sum</strong> — 3 PayPal payments tie to the cent</li>
+        <li><strong>Reads the SOW</strong> — Kraftwerk show Nov 14 → <span class="acct">1310 Prepaid</span> (cut-off)</li>
+        <li><strong>ECB FX rate</strong> — €2,950 × 1.1700 = $3,451.50, PayPal spread $147.50 → <span class="acct">6810 FX Fees</span></li>
+        <li><strong>Vendor dedupe</strong> — "Claude Max" → existing vendor <strong>Anthropic</strong></li>
+        <li><strong>Personal purchase</strong> — Steam $113.44 from tour manager → <span class="acct">1250 Employee Receivable</span> per March ruling</li>
+      </ul>
+      <p class="split-result">Four accounts. $3,912.44 split to the cent.</p>
+    </div>
+  </section>
+
+  <section class="seats-section">
+    <h2>Seats Filled</h2>
+    <p><strong>Staff Accountant</strong> (cash & expense close) + <strong>Vendor-Master Clerk</strong></p>
+    <p class="details">Reads: Bank, PayPal, Ramp, QBO GL/AP, contracts, receipts (read-only) • Writes: Nothing directly — proposes JEs, Gateway posts after Controller approval • Asks: When unsure, no support, or sources disagree</p>
+  </section>
+
+  <section class="hard-section">
+    <h2>What Makes It Hard</h2>
+    <p>Each challenge is addressed explicitly in the product:</p>
+    <div class="hard-cards">
+      <div class="hard-card">
+        <h3>Sources that disagree</h3>
+        <p>Bank says $3,912.44 PayPal, QBO guesses "Software", PayPal portal shows 3 payments → Solves subset-sum, trusts detail over descriptor</p>
+        <a href="/?tab=p3_bank">See: Bank Transactions tab</a>
+      </div>
+      <div class="hard-card">
+        <h3>Time</h3>
+        <p>Sept interest received Oct 1 → Other Receivable at 9/30 • Kraftwerk show Nov 14 → Prepaid • March ruling → Sept behavior</p>
+        <a href="/?tab=p1_timing">See: Timing & Accruals tab</a>
+      </div>
+      <div class="hard-card">
+        <h3>Working with others</h3>
+        <p>Vendor silent → escalate to Controller • Controller says no → re-plan, becomes precedent • Busy approvers → ask at right moment</p>
+        <a href="/">See: Approval workflow</a>
+      </div>
+      <div class="hard-card">
+        <h3>Limits (enforced in code)</h3>
+        <p>Self-approval denied • Only Gateway writes • Locked periods rejected • Roles checked every transition</p>
+        <a href="/test">See: tests/test_limits.py</a>
+      </div>
+      <div class="hard-card">
+        <h3>Explainable & accountable</h3>
+        <p>Every call traces to data/rule/person • "Why?" → audit trail query • Defendable under questioning</p>
+        <a href="/">See: Challenge button on proposals</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="arch-section">
+    <h2>System Architecture</h2>
+    <div class="arch-diagram">
+      <div class="arch-col">
+        <h4>Systems of Record<br><span class="sm">(read-only)</span></h4>
+        <div class="arch-box">Chase Bank CSV</div>
+        <div class="arch-box">PayPal API</div>
+        <div class="arch-box">Ramp CSV</div>
+        <div class="arch-box">QBO GL/AP/AR</div>
+        <div class="arch-box">Contracts, Receipts</div>
+      </div>
+      <div class="arch-arrow">→<br>sync<br>(cursors,<br>stable IDs)</div>
+      <div class="arch-col arch-ours">
+        <h4>Jarvis System of Work<br><span class="sm">(ours)</span></h4>
+        <div class="arch-box">Work Items (state machine)</div>
+        <div class="arch-box">Gateway (only writer)</div>
+        <div class="arch-box">Roles (can() enforced)</div>
+        <div class="arch-box">Audit Chain (hash-linked)</div>
+        <div class="arch-box">Policies from Precedent</div>
+        <div class="arch-box">Evidence Store</div>
+      </div>
+      <div class="arch-arrow">→<br>propose<br>approve<br>post</div>
+      <div class="arch-col">
+        <h4>Outcomes</h4>
+        <div class="arch-box">Ledger (via Gateway)</div>
+        <div class="arch-box">QBO GL Export</div>
+        <div class="arch-box">Beancount (bean-check)</div>
+        <div class="arch-box">Vendor Master</div>
+        <div class="arch-box">Close Evidence Pack</div>
+      </div>
+    </div>
+    <p class="arch-note"><strong>One door:</strong> Gateway is the only writer. Every write validated: entry balances, accounts exist, period open, no self-approval.</p>
+  </section>
+
+  <section class="problems-section">
+    <h2>Five Close Problems (From Our Accountant Teammate)</h2>
+    <table class="problems-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Today (Manual)</th>
+          <th>Jarvis (Autonomous)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Timing differences</strong><br>Sep interest deposited Oct 1</td>
+          <td>Manually check bank notice, create JE, remember to reverse Oct 1</td>
+          <td>Detects earned-vs-received, accrues with auto-reversal, logged</td>
+        </tr>
+        <tr>
+          <td><strong>2. Rolling forward package</strong><br>Add Sept column to Excel</td>
+          <td>Download 3 QBO exports, manually add column/rows, re-check formulas, hope QBO doesn't change</td>
+          <td>Parses exports, adds columns/rows, rewrites formulas, detects late changes, withdraws stale version</td>
+        </tr>
+        <tr>
+          <td><strong>3. Vague bank descriptors</strong><br>"PayPal" not merchant</td>
+          <td>Log into PayPal, manually match, guess categories</td>
+          <td>Simulated portal lookup, subset-sum match, SOW/receipt-driven categorization</td>
+        </tr>
+        <tr>
+          <td><strong>4. Saving evidence</strong><br>Organize statements in Drive</td>
+          <td>Download, rename "Statement (3).pdf", organize folders, miss gaps</td>
+          <td>Reads PDF contents, classifies, dedupes by hash, learns naming convention, flags missing items</td>
+        </tr>
+        <tr>
+          <td><strong>5. Duplicate vendors</strong><br>Claude vs Anthropic</td>
+          <td>Manually spot duplicates, merge in QBO, hope Ramp doesn't recreate</td>
+          <td>Normalize, score evidence (TIN, W-9, domain), merge, write prevention rules for Ramp sync</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="glossary-section">
+    <h2>Glossary</h2>
+    <dl class="glossary">
+      <dt>Debit / Credit</dt>
+      <dd>Double-entry sides: debits increase assets/expenses, credits increase liabilities/income. Every entry balances.</dd>
+      
+      <dt>Net Amount</dt>
+      <dd>The line's impact on an account, signed (positive = debit, negative = credit in QBO convention).</dd>
+      
+      <dt>ERP (Enterprise Resource Planning)</dt>
+      <dd>QuickBooks Online (QBO) in this case — the system of record for GL, AP, AR, chart of accounts, vendor master.</dd>
+      
+      <dt>General Ledger (GL)</dt>
+      <dd>Complete transaction history by account. Every journal entry, bill, invoice, payment lands here.</dd>
+      
+      <dt>Reconcile</dt>
+      <dd>Tie external records (bank statement) to internal records (GL cash account) and confirm they match.</dd>
+      
+      <dt>AP / AR</dt>
+      <dd>Accounts Payable (bills we owe) / Accounts Receivable (invoices customers owe us).</dd>
+      
+      <dt>Accrual</dt>
+      <dd>Recognize revenue/expense when earned/incurred, not when cash moves. Sep work invoiced Oct → accrue in Sep, reverse Oct 1.</dd>
+      
+      <dt>Cut-off</dt>
+      <dd>Period boundary: prepaid costs for future periods stay on balance sheet until they're used.</dd>
+      
+      <dt>Materiality</dt>
+      <dd>Threshold ($500 in this system) — amounts above it get extra scrutiny, below it may be expedited.</dd>
+      
+      <dt>Segregation of Duties</dt>
+      <dd>Requester ≠ approver. Enforced in code (roles.can()), not prompts. Jarvis can't approve its own proposals.</dd>
+    </dl>
+  </section>
+
+  <section class="proof-section">
+    <h2>Proof: Real vs Simulated</h2>
+    <table class="proof-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Real</th>
+          <th>Simulated</th>
+          <th>How We Know</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Double-entry ledger</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>Beancount export, <code>bean-check</code> validates</td>
+        </tr>
+        <tr>
+          <td>Hash-chained audit log</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>SQLite append-only, SHA-256 chain, "Verify chain" button</td>
+        </tr>
+        <tr>
+          <td>Segregation of duties</td>
+          <td>✅</td>
+          <td>—</td>
+          <td><code>tests/test_limits.py::test_self_approval_blocked</code></td>
+        </tr>
+        <tr>
+          <td>Materiality threshold</td>
+          <td>✅</td>
+          <td>—</td>
+          <td><code>bible.py:176</code>, applied in <code>core.py</code>, logs visible</td>
+        </tr>
+        <tr>
+          <td>QBO GL format</td>
+          <td>✅</td>
+          <td>—</td>
+          <td>Real headers: Debit, Credit, Distribution Account, Net Amount</td>
+        </tr>
+        <tr>
+          <td>LLM (Claude) connectivity</td>
+          <td>✅ when key present</td>
+          <td>✅ deterministic fallback</td>
+          <td>Header badge: green "LIVE" vs orange "deterministic"</td>
+        </tr>
+        <tr>
+          <td>Bank / PayPal / Ramp exports</td>
+          <td>—</td>
+          <td>✅</td>
+          <td>Real CSV structure, seeded data</td>
+        </tr>
+        <tr>
+          <td>Vendors, employees, Controller</td>
+          <td>—</td>
+          <td>✅</td>
+          <td>Personas (scripted unless ANTHROPIC_API_KEY set)</td>
+        </tr>
+        <tr>
+          <td>Documents (SOWs, receipts, invoices)</td>
+          <td>—</td>
+          <td>✅</td>
+          <td>Generated <code>.txt</code> files in <code>data/workbench/</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="proof-note"><strong>Live Scores:</strong> <a href="/">Run the workbench</a> to see real-time scoring (9/9 correct vs 3/9 baseline on Bank tab)</p>
+  </section>
+
+  <section class="cta-section">
+    <h2>Try It Live</h2>
+    <p>Type your own scenarios. Challenge any decision. Every call traces to data, rule, or person.</p>
+    <a href="/" class="cta-btn">Launch Workbench →</a>
+  </section>
+</main>
+
+<footer class="foot"><span class="fbrand">Jarvis<span>ERP</span></span><span>Records hold the truth. A system of work holds the work.</span></footer>
+
+</body>
+</html>

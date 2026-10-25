@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JarvisERP Workbench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ui/wb.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark"><i></i><i></i><i></i><i></i></div>
+    <div class="name">Jarvis<span>ERP</span></div>
+    <div class="sub">a system of work for the month-end close · Afterglow Labs · September 2026</div>
+  </div>
+  <div class="topright">
+    <span class="simtag" title="Every external party (vendors, PayPal, Drive, QBO) is simulated; the company data is synthetic but deliberately messy">simulated environment</span>
+    <button id="llm-badge" class="chip llm-badge" title="Click to test LLM connectivity">LLM: checking…</button>
+    <button id="chain" class="chip" title="Re-hash every audit row and check the chain">chain …</button>
+    <label class="speed" title="Agent pacing for live demos">pace <input id="speed" type="range" min="0" max="0.6" step="0.02" value="0.18"></label>
+    <button id="reset" class="ghost" title="Wipe the workbench database and all runs">Reset</button>
+    <a class="ghost" href="/synapse">Synapse ↗</a>
+  </div>
+</header>
+
+<nav id="tabs" class="tabs"></nav>
+
+<section id="hero" class="hero">
+  <div class="headline">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="h1"></h1>
+  </div>
+  <div id="pillars" class="pillars"></div>
+</section>
+
+<main id="main">
+  <section class="col inputs">
+    <div class="card problem">
+      <div class="who"><svg viewBox="0 0 16 16"><circle cx="8" cy="5" r="3"/><path d="M2.5 15c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5"/></svg>human + system of record</div>
+      <p id="problemText"></p>
+      <div id="pain" class="pain"></div>
+    </div>
+    <div class="card files">
+      <div class="cardhead"><span class="eyebrow">raw inputs, as received</span><span id="fileCount" class="muted"></span></div>
+      <div id="fileList" class="filelist"></div>
+    </div>
+  </section>
+
+  <section class="col agent">
+    <div class="card task">
+      <div class="cardhead">
+        <div class="who light"><svg viewBox="0 0 16 16"><rect x="2.5" y="5" width="11" height="8" rx="2"/><path d="M8 2v3M5.5 9h.01M10.5 9h.01"/></svg>ai agent + system of work</div>
+        <select id="runPick" title="Previous runs on this tab"></select>
+      </div>
+      <textarea id="taskText" rows="3"></textarea>
+      <div class="taskbar">
+        <button id="go" class="go">Task the agent →</button>
+        <button id="late" class="warnbtn hidden" title="The accountant posted a last-minute AJE in QBO and re-downloaded all three exports">⚡ Late QBO change → re-run</button>
+        <span id="runMeta" class="meta"></span>
+      </div>
+    </div>
+    <div class="card pipe">
+      <div class="cardhead"><span class="eyebrow">pipeline · click a stage to filter the log</span><span id="runStatus" class="status">idle</span></div>
+      <div id="pipeline" class="pipeline"></div>
+    </div>
+    <div class="term logs">
+      <div class="termhead">
+        <span>▸ live log <em>every line is a hash-chained audit row</em></span>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div id="log" class="log"><div class="empty">Task the agent to watch it work. Every action, fix and decision lands here, and in the audit chain.</div></div>
+    </div>
+  </section>
+
+  <section class="col outputs">
+    <div class="card props">
+      <div class="cardhead"><span class="eyebrow">needs your approval</span><span id="propCount" class="muted"></span></div>
+      <div id="proposals" class="proposals"><div class="empty">Nothing touches the books until a human approves it here. Only the Gateway writes.</div></div>
+    </div>
+    <div class="card arts">
+      <div class="cardhead"><span class="eyebrow">artifacts</span><span class="muted">produced at each stage</span></div>
+      <div id="artTabs" class="arttabs"></div>
+      <div id="artBody" class="artbody"><div class="empty">Cleaned tables, before → after diffs, folder trees, workbooks and the proof scorecard appear here.</div></div>
+    </div>
+  </section>
+</main>
+
+<section id="auditView" class="auditview hidden">
+  <div class="card">
+    <div class="cardhead"><span class="eyebrow">audit trail · append-only · each row hashes the previous one · denied attempts are logged too</span></div>
+    <div class="auditbar"><select id="auditRun"></select><button id="auditVerify" class="ghost">Verify chain</button><span id="auditMsg" class="muted"></span></div>
+    <div id="auditTable" class="tablewrap"></div>
+  </div>
+</section>
+
+<footer class="foot"><span class="fbrand">Jarvis<span>ERP</span></span><span>Records hold the truth. A system of work holds the work.</span><span id="footRun" class="mono"></span></footer>
+
+<div id="modal" class="modal hidden">
+  <div class="modalbox">
+    <div class="modalhead"><div><div class="eyebrow" id="mKind"></div><div id="mTitle" class="mtitle"></div></div>
+      <div class="mright"><span id="mMess" class="mess"></span><button id="mClose" class="ghost">Close</button></div></div>
+    <div id="mBody" class="modalbody"></div>
+  </div>
+</div>
+
+<script src="/ui/wb.js"></script>
+</body>
+</html>
