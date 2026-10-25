@@ -1,27 +1,15 @@
 import './style-simple.css'
-import { initParticleSea } from './particleSea'
 import { initEngine } from './engine'
 import { initGlossary } from './glossary'
 import { initTheMoment } from './theMoment'
 
 function init() {
-  // Check WebGL support
-  const canvas = document.createElement('canvas')
-  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
-  
-  if (gl) {
-    try {
-      initParticleSea()
-    } catch (error) {
-      console.warn('WebGL initialization failed, using fallback', error)
-    }
-  }
-  
   initTheMoment()
   initEngine()
   initGlossary()
   initUI()
   initDemoAnimation()
+  initVideoHero()
 }
 
 function initUI() {
@@ -145,6 +133,42 @@ function initDemoAnimation() {
     tableContainer.style.opacity = '1'
     tableContainer.style.transition = 'opacity 0.6s ease'
   }, 2000)
+}
+
+function initVideoHero() {
+  const video = document.getElementById('hero-video') as HTMLVideoElement
+  const splitCard = document.getElementById('hero-split-card')
+  const hero = document.getElementById('hero')
+  
+  if (!video) return
+
+  // Pause when offscreen
+  if (hero && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      })
+    })
+    observer.observe(hero)
+  }
+
+  // Fade in split card after first play (10s video)
+  if (splitCard) {
+    setTimeout(() => {
+      splitCard.classList.add('visible')
+    }, 10500)
+  }
+
+  // Handle reduced motion
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (prefersReducedMotion) {
+    video.pause()
+    video.style.display = 'none'
+  }
 }
 
 // Initialize when DOM is ready

@@ -24,9 +24,20 @@
   </nav>
 
   <div id="app">
-    <!-- Hero Section with Lightweight Particle Sea -->
+    <!-- Hero Section with Video Background -->
     <section id="hero" class="hero-section">
-      <canvas id="particle-canvas" class="hero-canvas"></canvas>
+      <video 
+        id="hero-video"
+        class="hero-video"
+        autoplay 
+        muted 
+        playsinline 
+        loop 
+        preload="metadata"
+        poster="/assets/poster.jpg">
+        <source src="/assets/hero.mp4" type="video/mp4">
+      </video>
+      <div class="hero-scrim"></div>
       <div class="hero-content">
         <div class="hero-kicker">JarvisERP · Autonomous Staff Accountant</div>
         <h1 class="hero-title">Close the month. <em>Prove every number.</em></h1>
@@ -35,6 +46,13 @@
           <a href="#product" class="btn btn-primary">Watch the Demo</a>
           <a href="#demo" class="btn btn-secondary">Try the Live Demo</a>
         </div>
+      </div>
+      <div id="hero-split-card" class="hero-split-card">
+        <div class="split-card-header">JARVIS · PROPOSED SPLIT</div>
+        <div class="split-line">$3,451.50 → 1310 Prepaid Tour Costs</div>
+        <div class="split-line">$147.50 → 6810 Bank & FX Fees</div>
+        <div class="split-line">$200.00 → 6410 Software (Claude)</div>
+        <div class="split-line">$113.44 → 1250 Employee Receivable</div>
       </div>
     </section>
 
