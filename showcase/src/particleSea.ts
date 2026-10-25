@@ -70,11 +70,22 @@ export function initParticleSea() {
   camera.position.set(0, 3.1, 11.2)
   camera.lookAt(0, 0.9, -2.2)
 
-  const renderer = new THREE.WebGLRenderer({ 
-    canvas, 
+  // Force WebGL2 for GLSL 3.0 shaders
+  const context = canvas.getContext('webgl2', { 
     alpha: true, 
     antialias: !isMobile,
     powerPreference: isMobile ? 'low-power' : 'high-performance'
+  })
+  
+  if (!context) {
+    console.error('WebGL2 not supported')
+    return
+  }
+  
+  const renderer = new THREE.WebGLRenderer({ 
+    canvas,
+    context,
+    alpha: true
   })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2))
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -229,7 +240,7 @@ export function initParticleSea() {
   const labels = [
     { text: 'PAYPAL *INST XFER −$3,912.44', x: 50, y: 12 },
     { text: '1310 · $3,451.50 · EUR crew deposit', x: 75, y: 28 },
-    { text: '6810 · $147.50 · wire fees', x: 25, y: 72 },
+    { text: '6810 · $147.50 · wire fees', x: 25, y: 72, brightness: 1.3 },
     { text: '6410 · $200.00 · Claude API', x: 80, y: 85 },
     { text: '1250 · $113.44 · Steam · reimburse', x: 15, y: 88 }
   ]
@@ -242,6 +253,9 @@ export function initParticleSea() {
       div.style.left = `${label.x}%`
       div.style.top = `${label.y}%`
       div.style.animationDelay = `${i * 0.8}s`
+      if (label.brightness) {
+        div.style.filter = `brightness(${label.brightness})`
+      }
       labelsContainer.appendChild(div)
     })
   }

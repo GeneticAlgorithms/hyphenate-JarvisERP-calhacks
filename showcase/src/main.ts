@@ -27,6 +27,23 @@ function init() {
   initEngine()
   initGlossary()
   initAnimations()
+  initNavigation()
+}
+
+function initNavigation() {
+  const nav = document.getElementById('main-nav')
+  const hero = document.getElementById('hero')
+  
+  if (!nav || !hero) return
+  
+  window.addEventListener('scroll', () => {
+    const heroRect = hero.getBoundingClientRect()
+    if (heroRect.bottom < 60) {
+      nav.classList.add('scrolled')
+    } else {
+      nav.classList.remove('scrolled')
+    }
+  })
 }
 
 function showWebGLFallback() {

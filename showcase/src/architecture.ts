@@ -33,6 +33,9 @@ export function initArchitecture() {
   const canvas = document.getElementById('arch-canvas') as HTMLCanvasElement
   if (!canvas || !container) return
 
+  // Position container relatively for absolute labels
+  container.style.position = 'relative'
+
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000)
   camera.position.set(30, 25, 30)
@@ -41,9 +44,11 @@ export function initArchitecture() {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
   renderer.setSize(container.clientWidth, container.clientHeight)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setClearColor(0xffffff, 1)
 
   // Create layers - glossy see-through on white
   const layerMeshes: THREE.Mesh[] = []
+  const layerLabels: HTMLDivElement[] = []
   const layerSpacing = 4
 
   LAYERS.forEach((layer, index) => {
@@ -75,15 +80,39 @@ export function initArchitecture() {
     })
     const line = new THREE.LineSegments(edges, lineMaterial)
     mesh.add(line)
+
+    // Create HTML label
+    const labelDiv = document.createElement('div')
+    labelDiv.className = 'arch-layer-label'
+    labelDiv.textContent = `Layer ${index + 1}: ${layer.name}`
+    labelDiv.style.cssText = `
+      position: absolute;
+      color: #${layer.color.toString(16).padStart(6, '0')};
+      font-size: 0.75rem;
+      font-weight: 600;
+      pointer-events: none;
+      white-space: nowrap;
+      padding: 0.25rem 0.5rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #${layer.color.toString(16).padStart(6, '0')};
+      border-radius: 4px;
+      z-index: 10;
+    `
+    container.appendChild(labelDiv)
+    layerLabels.push(labelDiv)
   })
 
-  // Add lights
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+  // Add lights for white background
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
   scene.add(ambientLight)
 
-  const pointLight = new THREE.PointLight(0xff7a1a, 1, 100)
-  pointLight.position.set(10, 20, 10)
-  scene.add(pointLight)
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6)
+  directionalLight.position.set(10, 20, 10)
+  scene.add(directionalLight)
+  
+  const fillLight = new THREE.DirectionalLight(0xfafafa, 0.3)
+  fillLight.position.set(-10, -10, -10)
+  scene.add(fillLight)
 
   // Create data packets
   const packets: THREE.Mesh[] = []
@@ -111,6 +140,26 @@ export function initArchitecture() {
   packets.push(denialPacket)
   scene.add(denialPacket)
 
+  // Update label positions
+  function updateLabelPositions() {
+    if (!container) return
+    
+    layerMeshes.forEach((mesh, i) => {
+      const labelDiv = layerLabels[i]
+      if (!labelDiv) return
+
+      const vector = new THREE.Vector3(mesh.position.x + 12, mesh.position.y, mesh.position.z)
+      vector.project(camera)
+
+      const x = (vector.x * 0.5 + 0.5) * container.clientWidth
+      const y = (-(vector.y * 0.5) + 0.5) * container.clientHeight
+
+      labelDiv.style.left = `${x}px`
+      labelDiv.style.top = `${y}px`
+      labelDiv.style.transform = 'translate(-100%, -50%)'
+    })
+  }
+
   // Animation
   let time = 0
   let mouseX = 0
@@ -124,6 +173,8 @@ export function initArchitecture() {
       mesh.rotation.y = Math.sin(time + i) * 0.1 + mouseX * 0.001
       mesh.position.x = Math.sin(time * 0.5 + i) * 0.5
     })
+
+    updateLabelPositions()
 
     // Animate packets
     packets.forEach(packet => {
