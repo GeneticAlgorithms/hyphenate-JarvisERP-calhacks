@@ -70,22 +70,11 @@ export function initParticleSea() {
   camera.position.set(0, 3.1, 11.2)
   camera.lookAt(0, 0.9, -2.2)
 
-  // Force WebGL2 for GLSL 3.0 shaders
-  const context = canvas.getContext('webgl2', { 
+  const renderer = new THREE.WebGLRenderer({ 
+    canvas, 
     alpha: true, 
     antialias: !isMobile,
     powerPreference: isMobile ? 'low-power' : 'high-performance'
-  })
-  
-  if (!context) {
-    console.error('WebGL2 not supported')
-    return
-  }
-  
-  const renderer = new THREE.WebGLRenderer({ 
-    canvas,
-    context,
-    alpha: true
   })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2))
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -156,12 +145,12 @@ export function initParticleSea() {
     vertexShader: `
       uniform float uTime, uBlob, uScroll;
       uniform float uCols, uRows;
-      in vec3 aGrid;
-      in vec4 aSeed;
-      in vec2 aInfo;
-      out vec2 vUv;
-      out vec3 vColor;
-      out float vAlpha;
+      attribute vec3 aGrid;
+      attribute vec4 aSeed;
+      attribute vec2 aInfo;
+      varying vec2 vUv;
+      varying vec3 vColor;
+      varying float vAlpha;
       
       float hash(float n) { return fract(sin(n) * 43758.5453123); }
       
@@ -217,16 +206,15 @@ export function initParticleSea() {
     fragmentShader: `
       precision highp float;
       uniform sampler2D uAtlas;
-      in vec2 vUv;
-      in vec3 vColor;
-      in float vAlpha;
-      layout(location = 0) out vec4 fragColor;
+      varying vec2 vUv;
+      varying vec3 vColor;
+      varying float vAlpha;
       
       void main() {
-        float a = texture(uAtlas, vUv).r;
+        float a = texture2D(uAtlas, vUv).r;
         a = smoothstep(0.02, 0.9, a);
         if (a * vAlpha < 0.002) discard;
-        fragColor = vec4(vColor * a * vAlpha, 1.0);
+        gl_FragColor = vec4(vColor * a * vAlpha, 1.0);
       }
     `
   })
