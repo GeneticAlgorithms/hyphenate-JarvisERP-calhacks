@@ -142,35 +142,20 @@ function initDemoAnimation() {
 
 function initVideoHero() {
   const video = document.getElementById('hero-video') as HTMLVideoElement
-  const splitCard = document.getElementById('hero-split-card')
   const hero = document.getElementById('hero')
   
   if (!video) return
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   
-  // Show split card immediately under reduced motion or right away for immediate reveal
-  if (prefersReducedMotion && splitCard) {
-    splitCard.classList.add('visible')
+  // Hide video under reduced motion
+  if (prefersReducedMotion) {
     video.pause()
     video.style.display = 'none'
     return
   }
 
-  // Show split card after short delay to let hero content settle
-  let cardShown = false
-  
-  const showSplitCard = () => {
-    if (!cardShown && splitCard) {
-      splitCard.classList.add('visible')
-      cardShown = true
-    }
-  }
-
-  // Show after 2s for immediate reveal beside headline
-  setTimeout(showSplitCard, 2000)
-
-  // Pause when offscreen
+  // Pause video when offscreen
   if (hero && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
