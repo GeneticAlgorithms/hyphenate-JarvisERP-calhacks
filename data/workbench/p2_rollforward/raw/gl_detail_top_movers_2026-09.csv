@@ -1,0 +1,10 @@
+Account,Date,Name,Memo,Amount
+5010 Crew & Production Costs,09/01/2026,Lumen Crew LLC,Reverse Aug accrual,"-13,450.00"
+5010 Crew & Production Costs,09/08/2026,Lumen Crew LLC,Aug invoice LC-2026-08,"14,963.00"
+5010 Crew & Production Costs,09/09/2026,Damlicht Crew B.V.,Crew fee Amsterdam 13 Sep,"2,108.44"
+6455 AI Compute (GPU rental),09/14/2026,Lambda Labs,GPU cluster for real-time visuals beta,"6,840.00"
+6420 Advertising & Marketing,09/08/2026,Google Ads,Fall tour promo,"1,250.00"
+6420 Advertising & Marketing,09/12/2026,Lumen Studios,Promo photo shoot,600.00
+4900 Interest Income,,,No September interest recorded (credited 10/01 - see timing workbench),0.00
+4020 Live Show Revenue,09/23/2026,Desert Hearts LLC,Wire - festival settlement,"30,574.75"
+5020 Gear Rental,09/20/2026,Bay Rig Rentals,Rigging Sept 20-27 (accrual pending),0.00

@@ -1,0 +1,5 @@
+Account,Institution,Last4,QBO Account,Requires
+Chase Operating,JPMorgan Chase,4471,1010 Cash - Chase Operating,statement;reconciliation
+Chase Savings,JPMorgan Chase,8820,1020 Cash - Chase Savings,statement;reconciliation
+Ramp Card,Ramp,0091,2050 Ramp Card Payable,statement;reconciliation
+PayPal Business,PayPal,PP01,1030 PayPal Balance,statement;reconciliation

@@ -1,0 +1,29 @@
+"Afterglow Labs, Inc."
+General Ledger / Transaction Detail by Account
+September 2026
+
+Transaction Date,Transaction Type,Num,Name,Memo/Description,Distribution Account,Split,Net Amount,Debit,Credit,Balance
+1260 Interest Receivable,,,,,,,,,,
+,,,,Beginning Balance,,,,,,994.95
+09/01/2026,Deposit,,,Interest received (Aug),1260,1010 Cash - Chase Operating,-994.95,,994.95,0.00
+Total for 1260 Interest Receivable,,,,,,,-994.95,,994.95,
+2100 Accrued Expenses,,,,,,,,,,
+,,,,Beginning Balance,,,,,,"-13,450.00"
+09/01/2026,Journal Entry,AJE-0801R,Lumen Crew LLC,Reverse Aug accrual,2100,5010 Crew & Production,"13,450.00","13,450.00",,0.00
+Total for 2100 Accrued Expenses,,,,,,,"13,450.00","13,450.00",,
+4900 Interest Income,,,,,,,,,,
+,,,,Beginning Balance,,,,,,"-7,049.77"
+Total for 4900 Interest Income,,,,,,,0.00,,,
+5010 Crew & Production Costs,,,,,,,,,,
+,,,,Beginning Balance,,,,,,"47,712.20"
+09/01/2026,Journal Entry,AJE-0801R,Lumen Crew LLC,Reverse Aug accrual,5010,2100 Accrued Expenses,"-13,450.00",,"13,450.00","34,262.20"
+09/08/2026,Bill,LC-2026-08,Lumen Crew LLC,Lighting services 2026-08,5010,2010 Accounts Payable,"14,963.00","14,963.00",,"49,225.20"
+09/09/2026,Expense,,Damlicht Crew B.V.,Crew fee Amsterdam 13 Sep,5010,1010 Cash - Chase Operating,"2,108.44","2,108.44",,"51,333.64"
+Total for 5010 Crew & Production Costs,,,,,,,"3,621.44","17,071.44","13,450.00",
+5020 Gear Rental,,,,,,,,,,
+,,,,Beginning Balance,,,,,,"1,680.00"
+09/23/2026,Expense,,Bay Rig Rentals,Refund - 1 motor unused,5020,2050 Ramp Card Payable,-420.00,,420.00,"1,260.00"
+Total for 5020 Gear Rental,,,,,,,-420.00,,420.00,
+TOTAL,,,,,,,,,,
+
+Accrual Basis,,,,"Tuesday, October 6, 2026 09:14 AM GMT-07:00",,,,,,
