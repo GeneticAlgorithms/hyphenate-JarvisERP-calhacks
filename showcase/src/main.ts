@@ -1,4 +1,4 @@
-import './style-simple.css'
+import './style.css'
 import { initEngine } from './engine'
 import { initGlossary } from './glossary'
 import { initTheMoment, initWorkflowSplit } from './theMoment'

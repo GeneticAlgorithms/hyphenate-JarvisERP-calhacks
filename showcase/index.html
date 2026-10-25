@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="JarvisERP - AI Staff Accountant for Month-End Close">
   <title>JarvisERP | Autonomous Staff Accountant</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='Fira Mono,monospace' font-weight='700' fill='%23ff7a1a'>J</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -39,22 +40,20 @@
       </video>
       <div class="hero-scrim"></div>
       <div class="hero-content">
-        <div class="hero-text">
-          <div class="hero-kicker">JarvisERP · Autonomous Staff Accountant</div>
-          <h1 class="hero-title">Close the month. <em>Prove every number.</em></h1>
-          <p class="hero-subtitle">AI that splits bank lines, asks when unsure, can't approve its own work, and logs every action on a tamper-proof audit trail.</p>
-          <div class="hero-actions">
-            <a href="#product" class="btn btn-primary">Watch the Demo</a>
-            <a href="#demo" class="btn btn-secondary">Try the Live Demo</a>
-          </div>
+        <div class="hero-kicker">JarvisERP · Autonomous Staff Accountant</div>
+        <h1 class="hero-title">Close the month. <em>Prove every number.</em></h1>
+        <p class="hero-subtitle">AI that splits bank lines, asks when unsure, can't approve its own work, and logs every action on a tamper-proof audit trail.</p>
+        <div class="hero-actions">
+          <a href="#product" class="btn btn-primary">Watch the Demo</a>
+          <a href="#demo" class="btn btn-secondary">Try the Live Demo</a>
         </div>
-        <div id="hero-split-card" class="hero-split-card">
-          <div class="split-card-header">JARVIS · PROPOSED SPLIT</div>
-          <div class="split-line">$3,451.50 → 1310 Prepaid Tour Costs</div>
-          <div class="split-line">$147.50 → 6810 Bank & FX Fees</div>
-          <div class="split-line">$200.00 → 6410 Software (Claude)</div>
-          <div class="split-line">$113.44 → 1250 Employee Receivable</div>
-        </div>
+      </div>
+      <div id="hero-split-card" class="hero-split-card">
+        <div class="split-card-header">JARVIS · PROPOSED SPLIT</div>
+        <div class="split-line">$3,451.50 → 1310 Prepaid Tour Costs</div>
+        <div class="split-line">$147.50 → 6810 Bank & FX Fees</div>
+        <div class="split-line">$200.00 → 6410 Software (Claude)</div>
+        <div class="split-line">$113.44 → 1250 Employee Receivable</div>
       </div>
     </section>
 
@@ -209,7 +208,7 @@
             </div>
             <textarea id="custom-challenge" placeholder="Or type your own challenge..."></textarea>
             <button id="btn-custom-challenge" class="btn btn-small">Submit Challenge</button>
-            <div id="challenge-response" class="challenge-response"></div>
+            <div id="challenge-response" class="challenge-response"><span style="color: var(--color-gray-400); font-style: italic;">Pick a challenge to see Jarvis respond</span></div>
             <div class="w-seek"><div class="w-seek-bar" style="width: 0%;"></div></div>
           </div>
         </div>
@@ -222,7 +221,7 @@
               <button class="btn-scenario" data-scenario="split-purchase">Split Purchases Under $2.5K</button>
               <button class="btn-scenario" data-scenario="refund-revenue">Refund as Revenue</button>
             </div>
-            <div id="scenario-output" class="scenario-output"></div>
+            <div id="scenario-output" class="scenario-output"><span style="color: var(--color-gray-400); font-style: italic;">Pick a scenario to see Jarvis respond</span></div>
             <div class="w-seek"><div class="w-seek-bar" style="width: 0%;"></div></div>
           </div>
         </div>
