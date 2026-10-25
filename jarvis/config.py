@@ -49,7 +49,7 @@ ROLE_KEYS = {
 # dev harness's proxy setting can't silently redirect the agent.
 ANTHROPIC_API_KEY = env("ANTHROPIC_API_KEY")
 ANTHROPIC_URL = env("JARVIS_ANTHROPIC_URL", "https://api.anthropic.com")
-MODEL_REASONING = env("JARVIS_MODEL_REASONING", "claude-sonnet-4-5")
-MODEL_FAST = env("JARVIS_MODEL_FAST", "claude-haiku-4-5")
+MODEL_REASONING = env("JARVIS_MODEL_REASONING", "claude-3-5-sonnet-20241022")
+MODEL_FAST = env("JARVIS_MODEL_FAST", "claude-3-5-haiku-20241022")
 
 SEC_USER_AGENT = env("SEC_USER_AGENT", "JarvisERP research contact@example.com")

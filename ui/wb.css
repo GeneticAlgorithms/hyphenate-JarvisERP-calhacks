@@ -143,8 +143,6 @@ select { background: var(--card); border: 1px solid var(--line2); border-radius:
 .filters button.off { opacity: .3; }
 .log { flex: 1; overflow: auto; font: 12px/1.6 var(--mono); padding: 0 8px 10px; }
 .ln { display: grid; grid-template-columns: 26px 58px 70px 1fr auto; gap: 8px; padding: 2px 6px; border-radius: 4px; align-items: start; animation: in .35s ease-out; }
-.ln .audit-badge { font: 10px var(--mono); color: #6f685f; padding: 2px 7px; border: 1px solid rgba(255,255,255,.1); border-radius: 4px; cursor: pointer; white-space: nowrap; transition: all .15s; }
-.ln .audit-badge:hover { color: var(--peach-line); border-color: var(--orange); background: rgba(250, 102, 16, .12); }
 @keyframes in { from { opacity: 0; background: rgba(250, 102, 16, .25); } }
 .ln:hover { background: rgba(255, 255, 255, .04); }
 .ln .seq, .ln .tm { color: #6f685f; }
@@ -318,9 +316,7 @@ tr.dup td { background: #fbeaea; } tr.blank td { background: var(--paper2); }
 /* ---------------- audit + footer */
 .auditview { flex: 1; min-height: 0; padding: 14px 28px; display: flex; }
 .auditview .card { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.auditview .tablewrap { flex: 1; overflow: auto; }
-.auditview tr.highlight { background: rgba(250, 102, 16, .25); animation: highlight-fade 2s ease-out; }
-@keyframes highlight-fade { 0% { background: rgba(250, 102, 16, .4); } 100% { background: transparent; } }
+.auditview .tablewrap { flex: 1; }
 .auditbar { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
 .deny-row td { color: var(--red) !important; }
 .foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 8px 28px; background: var(--paper2); font: 11.5px var(--mono); color: var(--mute); }

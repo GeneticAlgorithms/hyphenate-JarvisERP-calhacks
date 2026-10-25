@@ -455,16 +455,7 @@ def _match_vendor(name: str) -> dict | None:
         if significant_tokens and significant_tokens.issubset(vendor_tokens):
             return v
     
-    # Fourth pass: prefix matching with distinctive token requirement
-    # Require longer match or distinctive token to avoid false positives like "Crew" → "Damlicht Crew B.V."
-    common_words = {"crew", "inc", "llc", "corp", "co", "ltd", "gmbh", "b.v.", "company", "group", "solutions", "services"}
-    for v in bible.VENDORS:
-        vendor_lower = v["qbo_name"].lower()
-        vendor_tokens = set(vendor_lower.split())
-        for tok in name_tokens:
-            if len(tok) >= 5 and tok not in common_words:  # Distinctive token
-                if any(vt.startswith(tok) or tok in vt for vt in vendor_tokens):
-                    return v
+    # Fourth pass removed: was too loose, causing false positives like "Lumen Studios" → "Lumen Crew LLC"
     
     return None
 
@@ -616,8 +607,25 @@ def inject(session, text: str | None = None, template: str | None = None, params
             created.append(eng.process_item(it, kind, payload))
     elif template == "duplicate_bill":
         cents = abs(_dollars_to_cents(params["amount"]))
-        v = next((x for x in bible.VENDORS if x["qbo_name"] == params["vendor"]), None)
-        vid = v["id"] if v else db.one("SELECT vendor_id FROM vendors WHERE qbo_name=?", (params["vendor"],))["vendor_id"]
+        v = _match_vendor(params.get("vendor", ""))
+        
+        if not v:
+            # Vendor not found - create needs_info
+            anchor = f"inject:needs_info:{tag}"
+            it = create_item(db, SYNC, "judge_scenario", anchor,
+                            f"Judge scenario needs clarification: vendor '{params.get('vendor')}' not found",
+                            "2026-09", [])
+            question = f"Which vendor has the duplicate bill? I couldn't find '{params.get('vendor')}' in the vendor master."
+            rationale = f"Vendor '{params.get('vendor')}' not found in vendor master for duplicate-bill scenario."
+            patch = {"question": question, "rationale": rationale, "injected": text or template}
+            it = transition(db, it["item_id"], "ask", JARVIS, patch, reason=rationale)
+            created.append(it)
+            created = [c for c in created if c]
+            return {"template": template, "params": params, "parser": params.get("_parser", "deterministic"),
+                    "items": [{"item_id": c["item_id"], "state": c["state"], "kind": c["kind"], "title": c["title"],
+                              "rationale": c.get("rationale", ""), "parser": params.get("_parser", "deterministic")} for c in created]}
+        
+        vid = v["id"]
         rid = f"inj-{tag}"
         bill_id = f"BILL-INJ-{tag}"
         with db.tx():

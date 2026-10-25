@@ -121,8 +121,6 @@ def challenge(item_id: str, body: dict = Body(...)):
 
 @router.post("/api/wb/item/{item_id}/{decision}")
 def decide(item_id: str, decision: str, body: dict = Body(default={})):
-    from jarvis.work.gateway import ValidationError
-    
     w = W()
     try:
         if decision == "self-approve":
@@ -130,8 +128,6 @@ def decide(item_id: str, decision: str, body: dict = Body(default={})):
             return {"denied": False}
         res = w.decide(item_id, "approve" if decision == "approve" else "reject", body.get("reason", ""))
         return res
-    except ValidationError as e:
-        raise HTTPException(400, f"Entry validation failed: {str(e)}")
     except Denied as e:
         r = w.runs.get(get_item(w.db, item_id)["proposal"].get("run_id"))
         if r:

@@ -14,6 +14,10 @@ _selected_models = None  # cache: {"fast": model_id, "reasoning": model_id}
 
 
 def available() -> bool:
+    import os
+    llm_env = os.getenv("JARVIS_LLM", "").lower()
+    if llm_env in ("off", "false", "0", "no"):
+        return False
     return bool(config.ANTHROPIC_API_KEY)
 
 
@@ -63,9 +67,8 @@ def _select_models() -> dict[str, str]:
         
         # Sort: prefer higher version numbers (5-5 > 4-5 > 3-5), then dates if present
         def model_sort_key(model_id: str) -> tuple:
-            # Extract version numbers like 5-5, 4-5, or 3-5 (but NOT YYYYMMDD date suffixes)
-            # Match major-minor pattern but not 8-digit years
-            version_match = re.search(r'(\d+)-(\d+)(?!-?\d{6})', model_id)
+            # Extract version numbers like 5-5, 4-5, or 3-5
+            version_match = re.search(r'(\d+)[-.]\s*(\d+)', model_id)
             if version_match:
                 major, minor = int(version_match.group(1)), int(version_match.group(2))
             else:
@@ -102,46 +105,34 @@ def client():
     return _client
 
 
-def complete(system: str, user: str, fast: bool = False, max_tokens: int = 2000, db=None, actor_name: str = "ai_agent") -> str | None:
-    """Call LLM with optional audit logging. Pass db to log the call."""
+def complete(system: str, user: str, fast: bool = False, max_tokens: int = 2000, timeout: float | None = None) -> str | None:
     if not available():
         return None
     try:
         models = _select_models()
         model_id = models["fast"] if fast else models["reasoning"]
         
-        # Log LLM call to audit (no secrets, just metadata)
-        if db:
-            from jarvis.work.transition import log as audit_log
-            from jarvis.work.roles import actor
-            audit_log(db, actor(actor_name), "llm_call", f"model:{model_id}", 
-                     f"LLM call: {system[:100]}...", evidence=[{"user_prompt_length": len(user), "max_tokens": max_tokens}])
+        # Create kwargs for client call
+        kwargs = {
+            "model": model_id,
+            "max_tokens": max_tokens,
+            "system": system,
+            "messages": [{"role": "user", "content": user}]
+        }
         
-        msg = client().messages.create(
-            model=model_id, max_tokens=max_tokens,
-            system=system, messages=[{"role": "user", "content": user}])
-        result = "".join(b.text for b in msg.content if getattr(b, "type", "") == "text").strip()
+        # Add timeout if specified
+        if timeout is not None:
+            kwargs["timeout"] = timeout
         
-        # Log success
-        if db and result:
-            from jarvis.work.transition import log as audit_log
-            from jarvis.work.roles import actor
-            audit_log(db, actor(actor_name), "llm_success", f"model:{model_id}", 
-                     f"LLM returned {len(result)} chars")
-        
-        return result
-    except Exception as e:
-        # Log failure
-        if db:
-            from jarvis.work.transition import log as audit_log
-            from jarvis.work.roles import actor
-            audit_log(db, actor(actor_name), "llm_failed", f"model:{models.get('fast' if fast else 'reasoning', 'unknown')}", 
-                     f"LLM call failed: {type(e).__name__}: {str(e)[:200]}")
+        msg = client().messages.create(**kwargs)
+        return "".join(b.text for b in msg.content if getattr(b, "type", "") == "text").strip()
+    except Exception as e:  # network / quota / timeout - fall back to templates
         return None
 
 
-def complete_json(system: str, user: str, fast: bool = True) -> dict | None:
-    out = complete(system + "\nRespond with a single JSON object and nothing else.", user, fast=fast)
+def complete_json(system: str, user: str, fast: bool = True, timeout: float | None = None) -> dict | None:
+    """Complete with JSON response. Returns dict on success, None on failure."""
+    out = complete(system + "\nRespond with a single JSON object and nothing else.", user, fast=fast, timeout=timeout)
     if not out:
         return None
     try:
@@ -151,33 +142,33 @@ def complete_json(system: str, user: str, fast: bool = True) -> dict | None:
         return None
 
 
-def test_live(force_retest: bool = False) -> dict:
+def test_live() -> dict:
     """Test if LLM is actually working with a real call. Returns status dict."""
     global _llm_test_result
     
-    if _llm_test_result is not None and not force_retest:
+    if _llm_test_result is not None:
         models = _select_models()
         return {"status": "live" if _llm_test_result else "fallback", "tested": True, "cached": True,
                 "models": models if _llm_test_result else None}
     
     if not available():
-        # Don't cache no-API-key as permanent failure
-        return {"status": "fallback", "tested": True, "reason": "no API key", "cached": False}
+        _llm_test_result = False
+        import os
+        llm_env = os.getenv("JARVIS_LLM", "").lower()
+        if llm_env in ("off", "false", "0", "no"):
+            reason = "LLM disabled (JARVIS_LLM=off)"
+        else:
+            reason = "no API key"
+        return {"status": "fallback", "tested": True, "reason": reason, "cached": False}
     
     try:
         models = _select_models()
-        # Test both reasoning and fast models
-        reasoning_test = complete("You are a test system.", "Respond with exactly: OK", fast=False, max_tokens=10)
-        fast_test = complete("You are a test system.", "Respond with exactly: OK", fast=True, max_tokens=10)
-        
-        _llm_test_result = (reasoning_test is not None and fast_test is not None)
+        result = complete("You are a test system.", "Respond with exactly: OK", fast=True, max_tokens=10)
+        _llm_test_result = (result is not None)
         if _llm_test_result:
             return {"status": "live", "tested": True, "models": models, "cached": False}
         else:
-            # Don't cache API failures forever
-            _llm_test_result = None
-            return {"status": "fallback", "tested": True, "reason": "API call failed (one or both models)", "cached": False}
+            return {"status": "fallback", "tested": True, "reason": "API call failed", "cached": False}
     except Exception as e:
-        # Don't cache exceptions forever
-        _llm_test_result = None
+        _llm_test_result = False
         return {"status": "fallback", "tested": True, "reason": str(e)[:100], "cached": False}

@@ -129,18 +129,11 @@ def _classify_challenge(question: str) -> str:
 
 def _check_concession(question: str, it: dict) -> dict | None:
     """Check if new evidence in question should trigger concession and re-proposal."""
-    from jarvis.money import to_cents
-    
-    # Don't concede if item is already dismissed
-    if it["state"] in ("DISMISSED", "REJECTED"):
-        return None
-    
     q = question.lower()
     kind = it["proposal"].get("kind")
     
     # Pattern: "the show moved to [date]" or "actually happened [date]"
-    # ONLY for accruals/timing items (not cleared bank transactions)
-    if kind in ("accrual",) and ("moved to" in q or "actually" in q or "changed to" in q):
+    if kind in ("accrual", "bank_categorize") and ("moved to" in q or "actually" in q or "changed to" in q):
         # Extract new date
         date_match = re.search(r'(sept|september|oct|october)\s*(\d{1,2})', q)
         if date_match:
@@ -153,24 +146,23 @@ def _check_concession(question: str, it: dict) -> dict | None:
             if proposal_date and new_date[:7] != proposal_date[:7]:
                 return {
                     "concede": True,
-                    "reason": f"New evidence shows work happened in {new_date[:7]} not {proposal_date[:7]}",
+                    "reason": f"New evidence shows transaction belongs to {new_date[:7]} not {proposal_date[:7]}",
                     "new_date": new_date,
-                    "action": "withdraw accrual - work did not occur in this period"
+                    "action": "withdraw and re-propose in correct period"
                 }
     
     # Pattern: "actually billed $X" or "invoice shows $Y"
     if "actually" in q or "invoice shows" in q or "billed" in q:
         amt_match = re.search(r'\$\s?([\d,]+(?:\.\d{2})?)', question)
         if amt_match:
-            # Use to_cents to avoid float truncation
-            new_amt = to_cents(amt_match.group(0))
+            new_amt = float(amt_match.group(1).replace(",", "")) * 100
             # Sum debits only to get transaction amount (not double-counting)
             proposal_amt = sum(l.get("cents", 0) for l in it["proposal"].get("lines", []) if l.get("cents", 0) > 0)
             if abs(new_amt - proposal_amt) > 100:  # More than $1 difference
                 return {
                     "concede": True,
-                    "reason": f"Invoice confirms {fmt(new_amt)} not {fmt(proposal_amt)}",
-                    "new_amount": new_amt,
+                    "reason": f"Invoice confirms {fmt(int(new_amt))} not {fmt(proposal_amt)}",
+                    "new_amount": int(new_amt),
                     "action": "withdraw and re-propose with correct amount"
                 }
     
@@ -277,33 +269,19 @@ def defend(run, it, question: str) -> dict:
                     old_amount = disputed_line["cents"]
                     disputed_line["cents"] = concession["new_amount"]
                     
-                    # Update memo to reflect correction
-                    if "1310" in disputed_line.get("acct", ""):
-                        # Extract merchant/description
-                        memo_parts = disputed_line.get("memo", "").split()
-                        if memo_parts:
-                            disputed_line["memo"] = f"{memo_parts[0]} corrected invoice {fmt(concession['new_amount'])}"
-                    
                     # Calculate the difference
                     diff = concession["new_amount"] - old_amount
                     
-                    # Merge into existing 6810 line if present, or add new one
+                    # Add FX difference line to balance OR mark as NEEDS_INFO
                     if abs(diff) > 0:
-                        fx_line = next((l for l in lines if l.get("acct") == "6810"), None)
-                        if fx_line:
-                            # Merge into existing FX line
-                            fx_line["cents"] -= diff
-                            fx_line["memo"] = "FX spread + invoice difference"
-                            run.log("decide", f"Merged {fmt(abs(diff))} invoice difference into existing 6810 FX line", pause=0.5)
-                        else:
-                            # Add new balancing line
-                            diff_line = {
-                                "acct": "6810",
-                                "cents": -diff,
-                                "memo": f"Difference from corrected invoice amount"
-                            }
-                            lines.append(diff_line)
-                            run.log("decide", f"Added {fmt(abs(diff))} to 6810 Bank & FX Fees to balance the correction", pause=0.5)
+                        # Add balancing line for the difference (6810 FX/Bank Fees)
+                        diff_line = {
+                            "acct": "6810",
+                            "cents": -diff,  # Opposite sign to balance
+                            "memo": f"Difference from corrected invoice amount"
+                        }
+                        lines.append(diff_line)
+                        run.log("decide", f"Added {fmt(abs(diff))} to 6810 Bank & FX Fees to balance the correction", pause=0.5)
             
             if "new_date" in concession:
                 # If work moved to a different period, withdraw the accrual entirely

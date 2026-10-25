@@ -345,24 +345,11 @@ def policy_decide(policy_id: str, version: int, decision: str):
 
 @app.post("/api/inject")
 def inject(body: dict = Body(...)):
-    from jarvis.work.transition import append_audit, log as audit_log
-    from jarvis.work.roles import actor
     holder = {}
-    SYNC = actor("sync")
 
     def run():
-        try:
-            holder["r"] = S().inject(text=body.get("text"), template=body.get("template"), params=body.get("params"))
-            # Success already logged in injector.inject()
-            events.publish("inject_done", result=holder["r"])
-        except Exception as e:
-            # Log injection failure to audit log
-            reason = f"Injection failed: {type(e).__name__}: {str(e)[:200]}"
-            with S().db.tx():
-                append_audit(S().db, SYNC, "inject_failed", f"scenario:{body.get('template') or 'parse'}", 
-                           False, reason, {"error": str(e)[:400], "traceback": traceback.format_exc()[-800:]})
-            holder["r"] = {"success": False, "error": str(e), "template": body.get("template")}
-            events.publish("inject_done", result=holder["r"])
+        holder["r"] = S().inject(text=body.get("text"), template=body.get("template"), params=body.get("params"))
+        events.publish("inject_done", result=holder["r"])
     return background("inject", run)
 
 

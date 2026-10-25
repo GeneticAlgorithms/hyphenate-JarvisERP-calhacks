@@ -188,21 +188,11 @@ function buildFilters() {
 }
 function logEl(e) {
   const hasData = e.data !== null && e.data !== undefined;
-  const auditBadge = h("span", { 
-    class: "audit-badge", 
-    title: `Click to view audit row #${e.audit_seq || '?'}\nsha256 ${e.hash || '?'}`,
-    onclick: () => { selectTab("audit"); setTimeout(() => { 
-      const row = document.querySelector(`#auditTable tr[data-seq="${e.audit_seq}"]`);
-      if (row) { row.scrollIntoView({ behavior: "smooth", block: "center" }); row.classList.add("highlight"); 
-        setTimeout(() => row.classList.remove("highlight"), 2000); }
-    }, 100); }
-  }, `audit #${e.audit_seq || '?'} · ${String(e.hash || "").slice(0, 6)}`);
-  
-  const el = h("div", { class: `ln ${e.msg.startsWith("▶") ? "stagehead" : ""} ${hasData ? "hasdata" : ""} ${e.level === "deny" ? "deny" : ""} ${e.moment ? "mom" : ""}`, "data-seq": e.seq, "data-audit": e.audit_seq },
-    h("span", { class: "seq", title: `Log #${e.seq}` }, e.seq), h("span", { class: "tm" }, hhmmss(e.t)),
+  const el = h("div", { class: `ln ${e.msg.startsWith("▶") ? "stagehead" : ""} ${hasData ? "hasdata" : ""} ${e.level === "deny" ? "deny" : ""} ${e.moment ? "mom" : ""}`, "data-seq": e.seq },
+    h("span", { class: "seq" }, e.seq), h("span", { class: "tm" }, hhmmss(e.t)),
     h("span", { class: `lv lv-${e.level}`, title: LEVEL_TIPS[e.level] }, e.level),
     h("span", { class: "msg" }, e.moment ? h("span", { class: `tag ${e.moment}`, title: "a moment: " + e.moment }, "★ " + e.moment) : null, e.msg),
-    auditBadge);
+    h("span", { class: "hash", title: `audit row #${e.audit_seq}\nsha256 ${e.hash}` }, `#${e.audit_seq} ${String(e.hash || "").slice(0, 8)}`));
   if (hasData) el.querySelector(".msg").onclick = () => {
     const d = el.querySelector(".data"); if (d) return d.remove();
     el.append(h("div", { class: "data" }, JSON.stringify(e.data, null, 2)));
@@ -531,7 +521,7 @@ async function loadAudit(id) {
   $("#auditMsg").textContent = `${rows.length} rows for ${id}`;
   $("#auditTable").replaceChildren(h("table", { class: "t" },
     h("tr", {}, ["#", "at (UTC)", "actor", "role", "action", "subject", "allowed", "reason", "prev → hash"].map(x => h("th", {}, x))),
-    rows.map(r => h("tr", { class: r.allowed ? "" : "deny-row", "data-seq": r.seq }, h("td", { class: "n" }, r.seq), h("td", {}, (r.at || "").slice(11, 23)),
+    rows.map(r => h("tr", { class: r.allowed ? "" : "deny-row" }, h("td", { class: "n" }, r.seq), h("td", {}, (r.at || "").slice(11, 23)),
       h("td", {}, r.actor), h("td", {}, r.actor_role), h("td", {}, r.action), h("td", {}, r.subject), h("td", {}, r.allowed ? "✓" : "✗ denied"),
       h("td", {}, r.reason), h("td", { title: `${r.prev_hash}\n→ ${r.hash}` }, `${String(r.prev_hash).slice(0, 6)} → ${String(r.hash).slice(0, 8)}`)))));
 }

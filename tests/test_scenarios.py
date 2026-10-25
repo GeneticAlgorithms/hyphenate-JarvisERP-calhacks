@@ -29,7 +29,7 @@ def test_personal_purchase_reclassed(s):
 
 
 def test_duplicate_bill_caught(s):
-    r = s.inject(template="duplicate_bill", params={"vendor": "Notion", "amount": 96.00, "date": "2026-09-14"})
+    r = s.inject(template="duplicate_bill", params={"vendor": "Anthropic", "amount": 96.00, "date": "2026-09-14"})
     assert "duplicate" in kinds(r)
 
 

@@ -202,18 +202,12 @@ class Workbench:
 
     # ---------------------------------------------------------------- approvals -> gateway
     def decide(self, item_id: str, decision: str, reason: str = "", who: str = "maya") -> dict:
-        from jarvis.work.gateway import ValidationError
-        
         it = get_item(self.db, item_id)
         run = self.runs.get(it["proposal"].get("run_id"))
         if decision == "approve":
             transition(self.db, item_id, "approve", actor(who), {"answer": reason} if reason else None,
                        reason=reason or "Approved")
-            try:
-                res = self.apply(item_id, run)
-            except ValidationError as e:
-                # Gateway validation failed - entry doesn't balance or violates rules
-                raise ValidationError(f"Entry validation failed: {str(e)}")
+            res = self.apply(item_id, run)
         else:
             transition(self.db, item_id, "reject", actor(who), {"answer": reason}, reason=reason or "Rejected")
             res = {"rejected": True}
