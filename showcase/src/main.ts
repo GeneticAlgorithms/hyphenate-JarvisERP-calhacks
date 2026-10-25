@@ -1,7 +1,7 @@
 import './style-simple.css'
 import { initEngine } from './engine'
 import { initGlossary } from './glossary'
-import { initTheMoment } from './theMoment'
+import { initTheMoment, initWorkflowSplit } from './theMoment'
 
 function init() {
   initTheMoment()
@@ -28,6 +28,10 @@ function initUI() {
         content.classList.remove('active')
         if (content.getAttribute('data-content') === targetTab) {
           content.classList.add('active')
+          
+          if (targetTab === 'split') {
+            initWorkflowSplit()
+          }
         }
       })
     })
@@ -48,13 +52,13 @@ function initUI() {
     })
   })
 
-  // Smooth scroll
+  // Anchor navigation (native scroll, no smooth behavior)
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
       e.preventDefault()
       const target = document.querySelector(anchor.getAttribute('href') || '')
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        target.scrollIntoView({ block: 'start' })
       }
     })
   })
@@ -144,7 +148,7 @@ function initVideoHero() {
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   
-  // Show split card immediately under reduced motion
+  // Show split card immediately under reduced motion or right away for immediate reveal
   if (prefersReducedMotion && splitCard) {
     splitCard.classList.add('visible')
     video.pause()
@@ -152,7 +156,7 @@ function initVideoHero() {
     return
   }
 
-  // Multiple triggers to ensure split card appears
+  // Show split card after short delay to let hero content settle
   let cardShown = false
   
   const showSplitCard = () => {
@@ -162,18 +166,8 @@ function initVideoHero() {
     }
   }
 
-  // Trigger 1: video 'ended' event
-  video.addEventListener('ended', showSplitCard)
-
-  // Trigger 2: timeupdate near end (at 9s for 10s video)
-  video.addEventListener('timeupdate', () => {
-    if (video.currentTime >= 9 && !cardShown) {
-      showSplitCard()
-    }
-  })
-
-  // Trigger 3: 9s fallback timeout
-  setTimeout(showSplitCard, 9000)
+  // Show after 2s for immediate reveal beside headline
+  setTimeout(showSplitCard, 2000)
 
   // Pause when offscreen
   if (hero && 'IntersectionObserver' in window) {

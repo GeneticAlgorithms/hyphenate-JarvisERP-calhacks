@@ -13,8 +13,6 @@ function formatCurrency(amount: number): string {
 
 export function initTheMoment() {
   const bankLine = document.getElementById('bank-line')
-  const cardsContainer = document.getElementById('split-cards')
-  const tableContainer = document.getElementById('balance-table')
   
   let activated = false
   
@@ -27,45 +25,48 @@ export function initTheMoment() {
       scale: 1.05,
       borderColor: '#ff7a1a',
       onComplete: () => {
-        showSplits()
+        initWorkflowSplit()
       }
     })
   })
+}
+
+export function initWorkflowSplit() {
+  const cardsContainer = document.getElementById('split-cards')
+  const tableContainer = document.getElementById('balance-table')
   
-  function showSplits() {
-    if (!cardsContainer || !tableContainer) return
-    
-    cardsContainer.innerHTML = SPLITS.map(split => `
-      <div class="split-card">
-        <div class="split-account">${split.account}</div>
-        <div class="split-name">${split.name}</div>
-        <div style="font-size: 0.85rem; color: var(--color-gray-600); margin-bottom: 0.5rem;">${split.detail}</div>
-        <div class="split-amount">${formatCurrency(split.amount)}</div>
-      </div>
-    `).join('')
-    
-    gsap.to(cardsContainer, {
-      duration: 0.8,
-      opacity: 1,
-      y: 0,
-      ease: 'power2.out',
-      onComplete: () => {
-        showBalanceTable()
-      }
+  if (!cardsContainer || !tableContainer) return
+  
+  cardsContainer.innerHTML = SPLITS.map(split => `
+    <div class="split-card">
+      <div class="split-account">${split.account}</div>
+      <div class="split-name">${split.name}</div>
+      <div style="font-size: 0.85rem; color: var(--color-gray-600); margin-bottom: 0.5rem;">${split.detail}</div>
+      <div class="split-amount">${formatCurrency(split.amount)}</div>
+    </div>
+  `).join('')
+  
+  gsap.to(cardsContainer, {
+    duration: 0.8,
+    opacity: 1,
+    y: 0,
+    ease: 'power2.out',
+    onComplete: () => {
+      showBalanceTable()
+    }
+  })
+  
+  const cards = cardsContainer.querySelectorAll('.split-card')
+  cards.forEach((card, i) => {
+    gsap.from(card, {
+      duration: 0.6,
+      delay: i * 0.1,
+      opacity: 0,
+      y: 30,
+      rotationX: -20,
+      ease: 'back.out(1.7)'
     })
-    
-    const cards = cardsContainer.querySelectorAll('.split-card')
-    cards.forEach((card, i) => {
-      gsap.from(card, {
-        duration: 0.6,
-        delay: i * 0.1,
-        opacity: 0,
-        y: 30,
-        rotationX: -20,
-        ease: 'back.out(1.7)'
-      })
-    })
-  }
+  })
   
   function showBalanceTable() {
     if (!tableContainer) return
