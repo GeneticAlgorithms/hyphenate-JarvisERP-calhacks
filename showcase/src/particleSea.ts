@@ -224,6 +224,28 @@ export function initParticleSea() {
   particleSystem.frustumCulled = false
   scene.add(particleSystem)
 
+  // Floating labels
+  const labelsContainer = document.getElementById('hero-labels')
+  const labels = [
+    { text: 'PAYPAL *INST XFER −$3,912.44', x: 25, y: 15 },
+    { text: '1310 · $3,451.50 · EUR crew deposit', x: 70, y: 25 },
+    { text: '6810 · $147.50 · wire fees', x: 15, y: 55 },
+    { text: '6410 · $200 · Claude API', x: 80, y: 60 },
+    { text: '1250 · $113.44 · Steam · reimburse', x: 40, y: 75 }
+  ]
+
+  if (labelsContainer && !prefersReducedMotion) {
+    labels.forEach((label, i) => {
+      const div = document.createElement('div')
+      div.className = 'hero-label'
+      div.textContent = label.text
+      div.style.left = `${label.x}%`
+      div.style.top = `${label.y}%`
+      div.style.animationDelay = `${i * 0.4}s`
+      labelsContainer.appendChild(div)
+    })
+  }
+
   // Animation
   let time = 0
   let scrollProgress = 0

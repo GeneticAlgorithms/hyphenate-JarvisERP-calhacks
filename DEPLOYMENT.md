@@ -115,3 +115,9 @@ The warning is filtered out of tests and the site renders correctly in productio
 - **Repository**: https://github.com/GeneticAlgorithms/hyphenate-JarvisERP-calhacks
 - **PR #1**: https://github.com/GeneticAlgorithms/hyphenate-JarvisERP-calhacks/pull/1
 - **Workflow**: `.github/workflows/pages.yml`
+
+## 👤 Solo Project
+
+**Alexander Le**  
+UC Berkeley · Applied Math, Statistics & Philosophy  
+Built with Cursor and Grok Bot

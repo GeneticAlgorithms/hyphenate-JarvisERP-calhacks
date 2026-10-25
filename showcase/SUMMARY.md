@@ -274,11 +274,11 @@ Captured at 1920x1080 (desktop) and 390x844 (mobile):
 
 ---
 
-## 👤 Team
+## 👤 Solo Project
 
-**Alex Le**  
-UC Berkeley  
-Applied Math, Statistics & Philosophy
+**Alexander Le**  
+UC Berkeley · Applied Math, Statistics & Philosophy  
+Built with Cursor and Grok Bot
 
 **Cal Hacks 2026** · **Hyphenate Track**
 

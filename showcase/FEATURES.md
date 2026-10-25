@@ -303,11 +303,11 @@ npm run build
 
 ---
 
-## 👤 Credits
+## 👤 Solo Project
 
-**Alex Le**  
-UC Berkeley  
-Applied Math, Statistics & Philosophy
+**Alexander Le**  
+UC Berkeley · Applied Math, Statistics & Philosophy  
+Built with Cursor and Grok Bot
 
 **Cal Hacks 2026** · **Hyphenate Track**
 
