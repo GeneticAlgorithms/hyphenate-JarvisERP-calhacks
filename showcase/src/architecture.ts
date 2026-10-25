@@ -42,18 +42,22 @@ export function initArchitecture() {
   renderer.setSize(container.clientWidth, container.clientHeight)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-  // Create layers
+  // Create layers - glossy see-through on white
   const layerMeshes: THREE.Mesh[] = []
   const layerSpacing = 4
 
   LAYERS.forEach((layer, index) => {
     const geometry = new THREE.BoxGeometry(20, 0.5, 15)
-    const material = new THREE.MeshPhongMaterial({
+    const material = new THREE.MeshPhysicalMaterial({
       color: layer.color,
       transparent: true,
-      opacity: 0.7,
-      emissive: layer.color,
-      emissiveIntensity: 0.2
+      opacity: 0.15,
+      roughness: 0.1,
+      metalness: 0.1,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      transmission: 0.8,
+      thickness: 0.5
     })
     
     const mesh = new THREE.Mesh(geometry, material)
@@ -63,7 +67,12 @@ export function initArchitecture() {
     scene.add(mesh)
 
     const edges = new THREE.EdgesGeometry(geometry)
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 })
+    const lineMaterial = new THREE.LineBasicMaterial({ 
+      color: layer.color, 
+      transparent: true, 
+      opacity: 0.6,
+      linewidth: 1
+    })
     const line = new THREE.LineSegments(edges, lineMaterial)
     mesh.add(line)
   })
