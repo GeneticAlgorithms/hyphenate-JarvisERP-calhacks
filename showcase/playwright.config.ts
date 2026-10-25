@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:4173/hyphenate-JarvisERP-calhacks',
     trace: 'on-first-retry',
     launchOptions: {
       args: ['--use-angle=swiftshader']
@@ -26,7 +26,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run preview',
-    port: 5173,
-    reuseExistingServer: !process.env.CI,
+    port: 4173,
+    reuseExistingServer: true,
   },
 })

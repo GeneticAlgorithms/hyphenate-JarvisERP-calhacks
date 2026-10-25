@@ -234,7 +234,7 @@ import{M as Dr,O as lo,B as co,F as nn,S as Vt,U as mi,V as Je,W as li,H as ci,N
       in vec2 vUv;
       in vec3 vColor;
       in float vAlpha;
-      out vec4 fragColor;
+      layout(location = 0) out vec4 fragColor;
       
       void main() {
         float a = texture(uAtlas, vUv).r;

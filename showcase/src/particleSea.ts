@@ -209,7 +209,7 @@ export function initParticleSea() {
       in vec2 vUv;
       in vec3 vColor;
       in float vAlpha;
-      out vec4 fragColor;
+      layout(location = 0) out vec4 fragColor;
       
       void main() {
         float a = texture(uAtlas, vUv).r;
