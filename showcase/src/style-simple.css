@@ -128,14 +128,15 @@ body {
 
 .hero-split-card {
   position: absolute;
-  bottom: 6rem;
-  right: 4rem;
+  bottom: 4rem;
+  right: 2rem;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
   border: 2px solid var(--color-orange);
   border-radius: 12px;
   padding: 1.5rem;
   min-width: 320px;
+  max-width: 380px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
@@ -144,6 +145,14 @@ body {
 .hero-split-card.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .hero-split-card {
+    position: static;
+    margin-top: 2rem;
+    max-width: 100%;
+  }
 }
 
 .split-card-header {
@@ -401,8 +410,33 @@ body {
 /* Five Problems */
 .problems-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
+}
+
+@media (max-width: 1200px) {
+  .problems-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .problems-grid .problem-card:nth-child(4),
+  .problems-grid .problem-card:nth-child(5) {
+    grid-column: span 1;
+  }
+  
+  .problems-grid .problem-card:nth-child(4) {
+    margin-left: calc(33.333% + 1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .problems-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .problems-grid .problem-card:nth-child(4) {
+    margin-left: 0;
+  }
 }
 
 .problem-card {
@@ -420,17 +454,20 @@ body {
 
 .problem-num {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0.5rem;
   font-size: 2rem;
   font-weight: 700;
-  color: rgba(255, 122, 26, 0.15);
+  color: rgba(255, 122, 26, 0.1);
+  line-height: 1;
 }
 
 .problem-card h3 {
   font-size: 1.125rem;
   margin-bottom: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 2.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .problem-card p {

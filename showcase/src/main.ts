@@ -142,6 +142,39 @@ function initVideoHero() {
   
   if (!video) return
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  
+  // Show split card immediately under reduced motion
+  if (prefersReducedMotion && splitCard) {
+    splitCard.classList.add('visible')
+    video.pause()
+    video.style.display = 'none'
+    return
+  }
+
+  // Multiple triggers to ensure split card appears
+  let cardShown = false
+  
+  const showSplitCard = () => {
+    if (!cardShown && splitCard) {
+      splitCard.classList.add('visible')
+      cardShown = true
+    }
+  }
+
+  // Trigger 1: video 'ended' event
+  video.addEventListener('ended', showSplitCard)
+
+  // Trigger 2: timeupdate near end (at 9s for 10s video)
+  video.addEventListener('timeupdate', () => {
+    if (video.currentTime >= 9 && !cardShown) {
+      showSplitCard()
+    }
+  })
+
+  // Trigger 3: 9s fallback timeout
+  setTimeout(showSplitCard, 9000)
+
   // Pause when offscreen
   if (hero && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -154,20 +187,6 @@ function initVideoHero() {
       })
     })
     observer.observe(hero)
-  }
-
-  // Fade in split card after first play (10s video)
-  if (splitCard) {
-    setTimeout(() => {
-      splitCard.classList.add('visible')
-    }, 10500)
-  }
-
-  // Handle reduced motion
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (prefersReducedMotion) {
-    video.pause()
-    video.style.display = 'none'
   }
 }
 

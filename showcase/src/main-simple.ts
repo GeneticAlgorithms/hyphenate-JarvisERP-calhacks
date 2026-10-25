@@ -10,6 +10,7 @@ function init() {
   initUI()
   initDemoAnimation()
   initVideoHero()
+  initWorkflowSplit()
 }
 
 function initUI() {
@@ -142,6 +143,39 @@ function initVideoHero() {
   
   if (!video) return
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  
+  // Show split card immediately under reduced motion
+  if (prefersReducedMotion && splitCard) {
+    splitCard.classList.add('visible')
+    video.pause()
+    video.style.display = 'none'
+    return
+  }
+
+  // Multiple triggers to ensure split card appears
+  let cardShown = false
+  
+  const showSplitCard = () => {
+    if (!cardShown && splitCard) {
+      splitCard.classList.add('visible')
+      cardShown = true
+    }
+  }
+
+  // Trigger 1: video 'ended' event
+  video.addEventListener('ended', showSplitCard)
+
+  // Trigger 2: timeupdate near end (at 9s for 10s video)
+  video.addEventListener('timeupdate', () => {
+    if (video.currentTime >= 9 && !cardShown) {
+      showSplitCard()
+    }
+  })
+
+  // Trigger 3: 9s fallback timeout
+  setTimeout(showSplitCard, 9000)
+
   // Pause when offscreen
   if (hero && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -155,20 +189,76 @@ function initVideoHero() {
     })
     observer.observe(hero)
   }
+}
 
-  // Fade in split card after first play (10s video)
-  if (splitCard) {
-    setTimeout(() => {
-      splitCard.classList.add('visible')
-    }, 10500)
+function initWorkflowSplit() {
+  // Render split cards in the workflow tab immediately
+  const splitCards = document.getElementById('split-cards')
+  const balanceTable = document.getElementById('balance-table')
+  
+  if (!splitCards || !balanceTable) return
+
+  const splits = [
+    { account: '1310', name: 'Prepaid Tour Costs', detail: 'EUR crew deposit', amount: 3451.50 },
+    { account: '6810', name: 'Bank & FX Fees', detail: 'Transfer fees', amount: 147.50 },
+    { account: '6410', name: 'Software', detail: 'Claude API', amount: 200.00 },
+    { account: '1250', name: 'Employee Receivable', detail: 'Maya - Steam', amount: 113.44 }
+  ]
+
+  function formatCurrency(amount: number): string {
+    return '$' + amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
 
-  // Handle reduced motion
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (prefersReducedMotion) {
-    video.pause()
-    video.style.display = 'none'
-  }
+  // Render split cards
+  splitCards.innerHTML = splits.map(split => `
+    <div class="split-card">
+      <div class="split-account">${split.account}</div>
+      <div class="split-name">${split.name}</div>
+      <div style="font-size: 0.875rem; color: var(--color-gray-600); margin-bottom: 0.5rem;">${split.detail}</div>
+      <div class="split-amount">${formatCurrency(split.amount)}</div>
+    </div>
+  `).join('')
+  
+  splitCards.style.opacity = '1'
+
+  // Render balance table
+  const total = splits.reduce((sum, split) => sum + split.amount, 0)
+  
+  balanceTable.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Debit</th>
+          <th>Credit</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${splits.map(split => `
+          <tr>
+            <td>${split.account} ${split.name}</td>
+            <td>${formatCurrency(split.amount)}</td>
+            <td>—</td>
+          </tr>
+        `).join('')}
+        <tr>
+          <td>1010 Cash - Chase</td>
+          <td>—</td>
+          <td>${formatCurrency(total)}</td>
+        </tr>
+        <tr class="total-row">
+          <td>Net Amount</td>
+          <td>${formatCurrency(total)}</td>
+          <td>${formatCurrency(total)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="status-row">
+      <strong>✓ Balanced · Awaiting Controller Approval</strong>
+    </div>
+  `
+  
+  balanceTable.style.opacity = '1'
 }
 
 // Initialize when DOM is ready

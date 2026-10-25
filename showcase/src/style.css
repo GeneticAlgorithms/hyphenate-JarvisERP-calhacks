@@ -128,14 +128,15 @@ body {
 
 .hero-split-card {
   position: absolute;
-  bottom: 6rem;
-  right: 4rem;
+  bottom: 4rem;
+  right: 2rem;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
   border: 2px solid var(--color-orange);
   border-radius: 12px;
   padding: 1.5rem;
   min-width: 320px;
+  max-width: 380px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
@@ -144,6 +145,14 @@ body {
 .hero-split-card.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .hero-split-card {
+    position: static;
+    margin-top: 2rem;
+    max-width: 100%;
+  }
 }
 
 .split-card-header {
