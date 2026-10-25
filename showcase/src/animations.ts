@@ -13,44 +13,44 @@ export function initAnimations() {
   gsap.from('#the-moment .moment-container', {
     scrollTrigger: {
       trigger: '#the-moment',
-      start: 'top center',
+      start: 'top 80%',
       toggleActions: 'play none none none'
     },
     opacity: 0,
-    y: 50,
-    duration: 1
+    y: 30,
+    duration: 0.6
   })
   
   gsap.from('.problem-card', {
     scrollTrigger: {
       trigger: '#five-problems',
-      start: 'top center'
+      start: 'top 75%'
     },
     opacity: 0,
-    y: 30,
-    stagger: 0.15,
-    duration: 0.8
+    y: 20,
+    stagger: 0.1,
+    duration: 0.5
   })
   
   gsap.from('.comparison-col', {
     scrollTrigger: {
       trigger: '#real-vs-simulated',
-      start: 'top center'
+      start: 'top 75%'
     },
     opacity: 0,
-    x: (i) => i === 0 ? -50 : 50,
-    stagger: 0.2,
-    duration: 0.8
+    x: (i) => i === 0 ? -30 : 30,
+    stagger: 0.15,
+    duration: 0.6
   })
   
   gsap.from('.engine-panel', {
     scrollTrigger: {
       trigger: '#live-engine',
-      start: 'top center'
+      start: 'top 75%'
     },
     opacity: 0,
-    scale: 0.95,
-    stagger: 0.1,
-    duration: 0.6
+    scale: 0.97,
+    stagger: 0.08,
+    duration: 0.5
   })
 }

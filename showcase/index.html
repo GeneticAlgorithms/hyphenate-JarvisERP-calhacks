@@ -54,6 +54,9 @@
     <section id="live-engine" class="section">
       <h2>Live Engine</h2>
       <p class="section-subtitle">In-browser simulation of the JarvisERP engine; the full Python backend lives in this repo.</p>
+      <div class="traceability-callout" style="max-width: 800px; margin: 0 auto 2rem; padding: 1rem 1.5rem; background: rgba(255, 122, 26, 0.1); border-left: 3px solid var(--color-orange); border-radius: 4px; font-size: 0.9rem; line-height: 1.7;">
+        <strong style="color: var(--color-orange);">Traceability:</strong> Every stage of work leaves an audit row. Each action appends to the hash-chained log with actor, timestamp, and data. Denied attempts (403 self-approval) and state transitions are logged. The chain is cryptographically verifiable—tamper any row and verification shows exactly where it breaks.
+      </div>
       
       <div class="engine-grid">
         <!-- State Machine -->
@@ -179,9 +182,8 @@
       <div class="footer-content">
         <div class="footer-team">
           <h3>Built Solo</h3>
-          <p><strong>Alexander Le</strong></p>
-          <p>UC Berkeley · Applied Math, Statistics & Philosophy</p>
-          <p style="margin-top: 0.5rem; color: var(--color-text-dim); font-size: 0.9rem;">with Cursor and Grok Bot</p>
+          <p><strong>Built Solo by Alexander Le · with Cursor and Grok Bot</strong></p>
+          <p style="margin-top: 0.5rem;">UC Berkeley · Applied Math, Statistics & Philosophy</p>
         </div>
         <div class="footer-links">
           <h3>Project</h3>

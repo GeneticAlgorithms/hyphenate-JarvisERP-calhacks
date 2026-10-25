@@ -153,10 +153,25 @@ export function initArchitecture() {
 
   animate()
 
+  // Show initial layer info
+  const infoDiv = document.getElementById('arch-info')
+  if (infoDiv) {
+    infoDiv.classList.add('visible')
+    infoDiv.innerHTML = `
+      <h3>Architecture Layers (Hover to Explore)</h3>
+      <ul>
+        <li><strong>Layer 1:</strong> Systems of Record</li>
+        <li><strong>Layer 2:</strong> QBO ERP / GL</li>
+        <li><strong>Layer 3:</strong> JarvisERP System of Work</li>
+        <li><strong>Layer 4:</strong> Controls in Code</li>
+        <li><strong>Layer 5:</strong> People & Outputs</li>
+      </ul>
+    `
+  }
+
   // Mouse interaction
   const raycaster = new THREE.Raycaster()
   const mouse = new THREE.Vector2()
-  const infoDiv = document.getElementById('arch-info')
 
   canvas.addEventListener('mousemove', (event) => {
     const rect = canvas.getBoundingClientRect()
@@ -178,7 +193,17 @@ export function initArchitecture() {
         </ul>
       `
     } else if (infoDiv) {
-      infoDiv.classList.remove('visible')
+      infoDiv.classList.add('visible')
+      infoDiv.innerHTML = `
+        <h3>Architecture Layers (Hover to Explore)</h3>
+        <ul>
+          <li><strong>Layer 1:</strong> Systems of Record</li>
+          <li><strong>Layer 2:</strong> QBO ERP / GL</li>
+          <li><strong>Layer 3:</strong> JarvisERP System of Work</li>
+          <li><strong>Layer 4:</strong> Controls in Code</li>
+          <li><strong>Layer 5:</strong> People & Outputs</li>
+        </ul>
+      `
     }
   })
 

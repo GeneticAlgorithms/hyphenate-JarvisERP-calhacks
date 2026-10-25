@@ -227,11 +227,11 @@ export function initParticleSea() {
   // Floating labels
   const labelsContainer = document.getElementById('hero-labels')
   const labels = [
-    { text: 'PAYPAL *INST XFER −$3,912.44', x: 25, y: 15 },
-    { text: '1310 · $3,451.50 · EUR crew deposit', x: 70, y: 25 },
-    { text: '6810 · $147.50 · wire fees', x: 15, y: 55 },
-    { text: '6410 · $200 · Claude API', x: 80, y: 60 },
-    { text: '1250 · $113.44 · Steam · reimburse', x: 40, y: 75 }
+    { text: 'PAYPAL *INST XFER −$3,912.44', x: 50, y: 12 },
+    { text: '1310 · $3,451.50 · EUR crew deposit', x: 75, y: 28 },
+    { text: '6810 · $147.50 · wire fees', x: 25, y: 72 },
+    { text: '6410 · $200.00 · Claude API', x: 80, y: 85 },
+    { text: '1250 · $113.44 · Steam · reimburse', x: 15, y: 88 }
   ]
 
   if (labelsContainer && !prefersReducedMotion) {
@@ -241,7 +241,7 @@ export function initParticleSea() {
       div.textContent = label.text
       div.style.left = `${label.x}%`
       div.style.top = `${label.y}%`
-      div.style.animationDelay = `${i * 0.4}s`
+      div.style.animationDelay = `${i * 0.8}s`
       labelsContainer.appendChild(div)
     })
   }
