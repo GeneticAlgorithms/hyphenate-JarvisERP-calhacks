@@ -773,6 +773,67 @@ body {
   color: #ef4444;
 }
 
+/* Real vs Simulated */
+.real-vs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.real-vs-col {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.real-vs-col h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--color-black);
+}
+
+.real-vs-col p {
+  color: var(--color-gray-600);
+  line-height: 1.7;
+}
+
+.realistic-note {
+  background: rgba(255, 122, 26, 0.1);
+  border-left: 3px solid var(--color-orange);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.realistic-note h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--color-black);
+}
+
+.realistic-note p {
+  color: var(--color-gray-900);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.realistic-note ul {
+  margin: 1rem 0 1rem 1.5rem;
+  color: var(--color-gray-900);
+}
+
+.realistic-note li {
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+.realistic-note strong {
+  color: var(--color-black);
+}
+
 /* Glossary */
 .glossary-search {
   display: block;

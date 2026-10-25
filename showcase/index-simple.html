@@ -260,6 +260,37 @@
       </div>
     </section>
 
+    <!-- Real vs Simulated Section -->
+    <section id="real-vs-simulated" class="section">
+      <div class="container">
+        <h2 class="section-title">Real vs Simulated</h2>
+        <div class="real-vs-grid">
+          <div class="real-vs-col">
+            <h3>Simulated</h3>
+            <p><strong>Afterglow Labs</strong> (fictional AV touring studio), September 2026 scenario, Maya's Steam purchase, EUR crew deposit, Chase/PayPal/Ramp transaction data.</p>
+          </div>
+          <div class="real-vs-col">
+            <h3>Real Code</h3>
+            <p>Single ledger gateway (only write path), role-based authorization (HTTP 403), state machine (new → proposed → needs_info → approved → posted), SHA-256 hash-chained audit log, challenge/defend/concede with precedent recording.</p>
+          </div>
+        </div>
+        
+        <div class="realistic-note">
+          <h3>Why the synthetic data is realistic</h3>
+          <p>Afterglow Labs is synthetic so no real client's books are exposed, but it's modeled on how real books look:</p>
+          <ul>
+            <li><strong>QuickBooks-style chart of accounts:</strong> 1010 Cash, 1250 Employee Receivable, 1310 Prepaid, 6410 Software, 6810 Bank & FX Fees</li>
+            <li><strong>Real bank-descriptor formats:</strong> "PAYPAL *INST XFER", "ORIG CO NAME:STRIPE"</li>
+            <li><strong>Multi-source feeds:</strong> Bank statements, payment processors (PayPal/Stripe), corporate cards (Ramp), GL exports</li>
+            <li><strong>To-the-cent amounts including FX fees:</strong> $3,912.44 total with $147.50 wire fees</li>
+            <li><strong>Materiality thresholds & written policies:</strong> P-0317 (personal purchases → Employee Receivable)</li>
+            <li><strong>Real close problems:</strong> Bundled payments, personal spend on corporate cards, timing & accruals, duplicate vendors, vendor bank-change fraud</li>
+          </ul>
+          <p><strong>What's real:</strong> The reasoning, the AI calls, the controls (403 denial), and the hash-chained audit log. This is not derived from any real company.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Glossary Section -->
     <section id="glossary" class="section section-tint">
       <div class="container">
@@ -289,8 +320,10 @@
           <div class="faq-item">
             <button class="faq-q">What's real vs simulated?</button>
             <div class="faq-a">
-              <p><strong>Simulated:</strong> Afterglow Labs, Sep 2026 scenario, Maya's Steam purchase.</p>
-              <p><strong>Real code:</strong> Single gateway, HTTP 403, state machine, SHA-256 hash-chained audit log.</p>
+              <p><strong>Simulated:</strong> Afterglow Labs (fictional AV touring company), September 2026 scenario, Maya's Steam purchase, EUR crew deposit.</p>
+              <p><strong>Real code:</strong> Single gateway, HTTP 403, state machine, SHA-256 hash-chained audit log, challenge/defend system.</p>
+              <p><strong>Why the synthetic data is realistic:</strong> Afterglow Labs is synthetic so no real client's books are exposed, but it's modeled on how real books look: QuickBooks-style chart of accounts (1010 Cash, 1250 Employee Receivable, 6410 Software, 6810 Bank & FX Fees), real bank-descriptor formats ("PAYPAL *INST XFER"), multi-source feeds (bank, PayPal, Ramp, GL), to-the-cent amounts including FX fees ($3,912.44 with $147.50 wire fees), materiality thresholds, written policies (P-0317), and the real close problems (bundled payments, personal spend on corporate cards, timing & accruals, duplicate vendors, vendor bank-change fraud).</p>
+              <p><strong>What's real:</strong> The reasoning, the AI calls, the controls (403 denial), and the hash-chained audit log. This is not derived from any real company.</p>
             </div>
           </div>
           <div class="faq-item">
