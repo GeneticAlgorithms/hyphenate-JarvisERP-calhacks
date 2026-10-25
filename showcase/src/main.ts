@@ -1,4 +1,4 @@
-import './style-new.css'
+import './style-simple.css'
 import { initParticleSea } from './particleSea'
 import { initEngine } from './engine'
 import { initGlossary } from './glossary'
@@ -14,88 +14,50 @@ function init() {
       initParticleSea()
     } catch (error) {
       console.warn('WebGL initialization failed, using fallback', error)
-      showWebGLFallback()
     }
-  } else {
-    showWebGLFallback()
   }
   
   initTheMoment()
   initEngine()
   initGlossary()
   initUI()
+  initDemoAnimation()
 }
 
 function initUI() {
-  // Tab switching
-  const tabButtons = document.querySelectorAll('.tab-button')
-  tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const tabName = button.getAttribute('data-tab')
+  // Workflow tabs
+  const workflowTabs = document.querySelectorAll('.workflow-tab')
+  const workflowContents = document.querySelectorAll('.workflow-content')
+  
+  workflowTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetTab = tab.getAttribute('data-tab')
       
-      // Update buttons
-      tabButtons.forEach(btn => btn.classList.remove('active'))
-      button.classList.add('active')
+      workflowTabs.forEach(t => t.classList.remove('active'))
+      tab.classList.add('active')
       
-      // Update content
-      document.querySelectorAll('.tab-content').forEach(content => {
+      workflowContents.forEach(content => {
         content.classList.remove('active')
+        if (content.getAttribute('data-content') === targetTab) {
+          content.classList.add('active')
+        }
       })
-      const targetContent = document.querySelector(`[data-tab-content="${tabName}"]`)
-      if (targetContent) {
-        targetContent.classList.add('active')
-      }
     })
   })
 
   // FAQ Accordion
   const faqItems = document.querySelectorAll('.faq-item')
   faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question')
+    const question = item.querySelector('.faq-q')
     question?.addEventListener('click', () => {
       const isActive = item.classList.contains('active')
       
-      // Close all
       faqItems.forEach(i => i.classList.remove('active'))
       
-      // Open clicked if it wasn't active
       if (!isActive) {
         item.classList.add('active')
       }
     })
-  })
-
-  // Trust layer interaction
-  const layers = document.querySelectorAll('.glass-layer')
-  const details = document.querySelectorAll('.trust-detail')
-  
-  layers.forEach((layer, index) => {
-    layer.addEventListener('click', () => {
-      // Update layers
-      layers.forEach(l => l.classList.remove('active'))
-      layer.classList.add('active')
-      
-      // Update details
-      details.forEach(d => d.classList.remove('active'))
-      const targetDetail = document.querySelector(`[data-detail="${index + 1}"]`)
-      if (targetDetail) {
-        targetDetail.classList.add('active')
-      }
-    })
-  })
-
-  // Activate first layer by default
-  if (layers.length > 0 && details.length > 0) {
-    layers[0].classList.add('active')
-    details[0].classList.add('active')
-  }
-
-  // Mobile menu toggle
-  const menuToggle = document.querySelector('.mobile-menu-toggle')
-  const navLinks = document.querySelector('.nav-links')
-  
-  menuToggle?.addEventListener('click', () => {
-    navLinks?.classList.toggle('active')
   })
 
   // Smooth scroll
@@ -110,30 +72,79 @@ function initUI() {
   })
 }
 
-function showWebGLFallback() {
-  const heroCanvas = document.getElementById('particle-canvas') as HTMLCanvasElement
-  if (heroCanvas) {
-    heroCanvas.style.display = 'none'
-    const hero = document.getElementById('hero')
-    if (hero) {
-      hero.style.background = 'linear-gradient(135deg, #6b1d2a 0%, #0a0a0a 50%, #ff7a1a 100%)'
-    }
+function initDemoAnimation() {
+  // Simple CSS/GSAP demo animation for the product mock
+  const splits = [
+    { account: '1310', name: 'Prepaid Tour Costs', detail: 'EUR crew deposit', amount: 3451.50 },
+    { account: '6810', name: 'Bank & FX Fees', detail: 'Transfer fees', amount: 147.50 },
+    { account: '6410', name: 'Software', detail: 'Claude API', amount: 200.00 },
+    { account: '1250', name: 'Employee Receivable', detail: 'Maya - Steam', amount: 113.44 }
+  ]
+
+  function formatCurrency(amount: number): string {
+    return '$' + amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
+
+  const splitsContainer = document.getElementById('demo-splits')
+  const tableContainer = document.getElementById('demo-table')
   
-  const archCanvas = document.getElementById('arch-canvas') as HTMLCanvasElement
-  if (archCanvas) {
-    const ctx = archCanvas.getContext('2d')
-    if (ctx) {
-      archCanvas.width = archCanvas.clientWidth
-      archCanvas.height = archCanvas.clientHeight
-      ctx.fillStyle = '#141414'
-      ctx.fillRect(0, 0, archCanvas.width, archCanvas.height)
-      ctx.fillStyle = '#ff7a1a'
-      ctx.font = '16px Fira Mono'
-      ctx.textAlign = 'center'
-      ctx.fillText('WebGL unavailable - 3D visualization disabled', archCanvas.width / 2, archCanvas.height / 2)
-    }
-  }
+  if (!splitsContainer || !tableContainer) return
+
+  // Simple reveal animation after a delay
+  setTimeout(() => {
+    splitsContainer.innerHTML = splits.map(split => `
+      <div style="padding: 1rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); border-radius: 8px;">
+        <div style="font-size: 0.75rem; color: var(--color-gray-600); margin-bottom: 0.25rem;">${split.account}</div>
+        <div style="font-weight: 600; margin-bottom: 0.25rem;">${split.name}</div>
+        <div style="font-size: 0.875rem; color: var(--color-gray-600); margin-bottom: 0.5rem;">${split.detail}</div>
+        <div style="font-size: 1.125rem; font-weight: 700; color: var(--color-orange);">${formatCurrency(split.amount)}</div>
+      </div>
+    `).join('')
+    
+    splitsContainer.style.opacity = '1'
+    splitsContainer.style.transition = 'opacity 0.6s ease'
+  }, 1000)
+
+  setTimeout(() => {
+    const total = splits.reduce((sum, split) => sum + split.amount, 0)
+    
+    tableContainer.innerHTML = `
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--color-gray-200);">Account</th>
+            <th style="padding: 0.75rem; text-align: right; border-bottom: 1px solid var(--color-gray-200);">Debit</th>
+            <th style="padding: 0.75rem; text-align: right; border-bottom: 1px solid var(--color-gray-200);">Credit</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${splits.map(split => `
+            <tr>
+              <td style="padding: 0.75rem; border-bottom: 1px solid var(--color-gray-200);">${split.account} ${split.name}</td>
+              <td style="padding: 0.75rem; text-align: right; border-bottom: 1px solid var(--color-gray-200);">${formatCurrency(split.amount)}</td>
+              <td style="padding: 0.75rem; text-align: right; border-bottom: 1px solid var(--color-gray-200);">—</td>
+            </tr>
+          `).join('')}
+          <tr>
+            <td style="padding: 0.75rem; border-bottom: 1px solid var(--color-gray-200);">1010 Cash - Chase</td>
+            <td style="padding: 0.75rem; text-align: right; border-bottom: 1px solid var(--color-gray-200);">—</td>
+            <td style="padding: 0.75rem; text-align: right; border-bottom: 1px solid var(--color-gray-200);">${formatCurrency(total)}</td>
+          </tr>
+          <tr style="font-weight: 700;">
+            <td style="padding: 0.75rem; border-top: 2px solid var(--color-black);">Net Amount</td>
+            <td style="padding: 0.75rem; text-align: right; border-top: 2px solid var(--color-black);">${formatCurrency(total)}</td>
+            <td style="padding: 0.75rem; text-align: right; border-top: 2px solid var(--color-black);">${formatCurrency(total)}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top: 1rem; text-align: center; color: var(--color-orange); font-weight: 600;">
+        ✓ Balanced · Awaiting Controller Approval
+      </div>
+    `
+    
+    tableContainer.style.opacity = '1'
+    tableContainer.style.transition = 'opacity 0.6s ease'
+  }, 2000)
 }
 
 // Initialize when DOM is ready
