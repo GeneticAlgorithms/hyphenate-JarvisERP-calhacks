@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JarvisERP - AI Staff Accountant for Month-End Close">
+  <title>JarvisERP | Cal Hacks 2026 - Hyphenate Track</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Fira+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/hyphenate-JarvisERP-calhacks/assets/index-BiOAY3vZ.js"></script>
+  <link rel="modulepreload" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/three-kLBSizMC.js">
+  <link rel="modulepreload" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/gsap-SFc2wnMY.js">
+  <link rel="stylesheet" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/index-1AxEom3R.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Hero Section -->
+    <section id="hero" class="section">
+      <canvas id="particle-canvas"></canvas>
+      <div class="hero-content">
+        <h1 class="hero-title">JarvisERP</h1>
+        <p class="hero-pitch">An AI staff accountant that closes the books. It untangles messy bank lines with evidence, asks when unsure, takes a no, and can't approve its own work, with every action on a tamper-proof audit trail.</p>
+        <div class="hero-meta">
+          <span>Cal Hacks 2026 · Hyphenate Track</span>
+          <span>Alex Le · UC Berkeley</span>
+        </div>
+      </div>
+      <div id="hero-labels" class="hero-labels"></div>
+    </section>
+
+    <!-- The Moment Section -->
+    <section id="the-moment" class="section">
+      <h2>The Moment</h2>
+      <p class="section-subtitle">Chase shows a PayPal transfer. QuickBooks suggests booking it all to Software. Jarvis digs deeper.</p>
+      <div class="moment-container">
+        <div id="bank-line" class="bank-line clickable">
+          <span class="bank-date">2026-09-30</span>
+          <span class="bank-desc">PAYPAL *INST XFER</span>
+          <span class="bank-amount">-$3,912.44</span>
+        </div>
+        <div id="split-cards" class="split-cards"></div>
+        <div id="balance-table" class="balance-table"></div>
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section">
+      <h2>Architecture</h2>
+      <p class="section-subtitle">Five layers, one gatekeeper, zero shortcuts.</p>
+      <div id="arch-canvas-container">
+        <canvas id="arch-canvas"></canvas>
+      </div>
+      <div id="arch-info" class="arch-info"></div>
+    </section>
+
+    <!-- Live Engine Section -->
+    <section id="live-engine" class="section">
+      <h2>Live Engine</h2>
+      <p class="section-subtitle">In-browser simulation of the JarvisERP engine; the full Python backend lives in this repo.</p>
+      
+      <div class="engine-grid">
+        <!-- State Machine -->
+        <div class="engine-panel">
+          <h3>State Machine</h3>
+          <div id="state-display" class="state-display">new</div>
+          <div class="engine-controls">
+            <button id="btn-propose" class="btn-engine">Propose</button>
+            <button id="btn-ask" class="btn-engine" disabled>Ask Controller</button>
+            <button id="btn-approve-ctrl" class="btn-engine" disabled>Approve (Controller)</button>
+            <button id="btn-approve-jarvis" class="btn-engine" disabled>Approve (Jarvis)</button>
+          </div>
+          <div id="state-message" class="state-message"></div>
+        </div>
+
+        <!-- Audit Log -->
+        <div class="engine-panel">
+          <h3>Hash-Chained Audit Log</h3>
+          <div id="audit-log" class="audit-log"></div>
+          <div class="engine-controls">
+            <button id="btn-tamper" class="btn-engine">Tamper Row 2</button>
+            <button id="btn-verify" class="btn-engine">Verify Chain</button>
+          </div>
+          <div id="verify-result" class="verify-result"></div>
+        </div>
+
+        <!-- Challenge System -->
+        <div class="engine-panel">
+          <h3>Challenge & Defend</h3>
+          <div class="challenge-controls">
+            <button class="btn-challenge" data-challenge="materiality">Why not expense it all? Under materiality.</button>
+            <button class="btn-challenge" data-challenge="simpler">This seems overcomplicated.</button>
+            <button class="btn-challenge" data-challenge="timing">Can we book it next month?</button>
+          </div>
+          <textarea id="custom-challenge" placeholder="Or type your own challenge..."></textarea>
+          <button id="btn-custom-challenge" class="btn-engine">Submit Challenge</button>
+          <div id="challenge-response" class="challenge-response"></div>
+          <button id="btn-new-evidence" class="btn-engine">New Evidence (Triggers Concede)</button>
+        </div>
+
+        <!-- Scenario Injector -->
+        <div class="engine-panel">
+          <h3>Scenario Injector</h3>
+          <div class="scenario-controls">
+            <button class="btn-scenario" data-scenario="vendor-scam">Vendor Bank Change Scam</button>
+            <button class="btn-scenario" data-scenario="split-purchase">Split Purchases Under $2.5K</button>
+            <button class="btn-scenario" data-scenario="refund-revenue">Refund as Revenue</button>
+          </div>
+          <div id="scenario-output" class="scenario-output"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Five Problems Section -->
+    <section id="five-problems" class="section">
+      <h2>The Five Close Problems</h2>
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-number">01</div>
+          <h3>Timing & Accruals</h3>
+          <p>Matching revenue and expenses to the correct period, even when the invoice arrives late or early.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-number">02</div>
+          <h3>Rolling Forward</h3>
+          <p>Creating the financial package on time with accurate comparisons to prior periods.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-number">03</div>
+          <h3>Vague Bank Transactions</h3>
+          <p>Decoding cryptic bank descriptions to find the real vendor, account, and purpose.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-number">04</div>
+          <h3>Filing Evidence</h3>
+          <p>Storing receipts, invoices, and approvals in a way that auditors (and future you) can actually find them.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-number">05</div>
+          <h3>Duplicate Vendors</h3>
+          <p>One company, many names: Claude vs Anthropic, Cursor vs Anysphere, same vendor, different entries.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Real vs Simulated Section -->
+    <section id="real-vs-simulated" class="section">
+      <h2>Real vs Simulated</h2>
+      <div class="comparison-grid">
+        <div class="comparison-col">
+          <h3>Simulated</h3>
+          <ul>
+            <li>Afterglow Labs (fictional AV touring studio)</li>
+            <li>Chase, PayPal, Ramp transaction data</li>
+            <li>September 2026 month-end scenario</li>
+            <li>Maya's Steam purchase</li>
+            <li>EUR crew deposit</li>
+          </ul>
+        </div>
+        <div class="comparison-col">
+          <h3>Real Code</h3>
+          <ul>
+            <li>Single ledger gateway (only write path)</li>
+            <li>Role-based authorization (HTTP 403)</li>
+            <li>State machine (new → proposed → needs_info → approved → posted)</li>
+            <li>SHA-256 hash-chained audit log</li>
+            <li>Challenge/defend/concede with precedent recording</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glossary Section -->
+    <section id="glossary" class="section">
+      <h2>Glossary</h2>
+      <input type="text" id="glossary-search" placeholder="Search terms..." class="glossary-search">
+      <div id="glossary-grid" class="glossary-grid"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-team">
+          <h3>Team</h3>
+          <p>Alex Le</p>
+          <p>UC Berkeley · Applied Math, Statistics & Philosophy</p>
+        </div>
+        <div class="footer-links">
+          <h3>Project</h3>
+          <a href="https://github.com/GeneticAlgorithms/hyphenate-JarvisERP-calhacks" target="_blank" rel="noopener">GitHub Repository</a>
+        </div>
+        <div class="footer-tech">
+          <h3>Built With</h3>
+          <p>Vite · TypeScript · Three.js · GSAP · WebCrypto</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+  
+</body>
+</html>
