@@ -1,9 +1,7 @@
-import './style.css'
+import './style-new.css'
 import { initParticleSea } from './particleSea'
-import { initArchitecture } from './architecture'
 import { initEngine } from './engine'
 import { initGlossary } from './glossary'
-import { initAnimations } from './animations'
 import { initTheMoment } from './theMoment'
 
 function init() {
@@ -14,7 +12,6 @@ function init() {
   if (gl) {
     try {
       initParticleSea()
-      initArchitecture()
     } catch (error) {
       console.warn('WebGL initialization failed, using fallback', error)
       showWebGLFallback()
@@ -26,23 +23,90 @@ function init() {
   initTheMoment()
   initEngine()
   initGlossary()
-  initAnimations()
-  initNavigation()
+  initUI()
 }
 
-function initNavigation() {
-  const nav = document.getElementById('main-nav')
-  const hero = document.getElementById('hero')
+function initUI() {
+  // Tab switching
+  const tabButtons = document.querySelectorAll('.tab-button')
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const tabName = button.getAttribute('data-tab')
+      
+      // Update buttons
+      tabButtons.forEach(btn => btn.classList.remove('active'))
+      button.classList.add('active')
+      
+      // Update content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active')
+      })
+      const targetContent = document.querySelector(`[data-tab-content="${tabName}"]`)
+      if (targetContent) {
+        targetContent.classList.add('active')
+      }
+    })
+  })
+
+  // FAQ Accordion
+  const faqItems = document.querySelectorAll('.faq-item')
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question')
+    question?.addEventListener('click', () => {
+      const isActive = item.classList.contains('active')
+      
+      // Close all
+      faqItems.forEach(i => i.classList.remove('active'))
+      
+      // Open clicked if it wasn't active
+      if (!isActive) {
+        item.classList.add('active')
+      }
+    })
+  })
+
+  // Trust layer interaction
+  const layers = document.querySelectorAll('.glass-layer')
+  const details = document.querySelectorAll('.trust-detail')
   
-  if (!nav || !hero) return
+  layers.forEach((layer, index) => {
+    layer.addEventListener('click', () => {
+      // Update layers
+      layers.forEach(l => l.classList.remove('active'))
+      layer.classList.add('active')
+      
+      // Update details
+      details.forEach(d => d.classList.remove('active'))
+      const targetDetail = document.querySelector(`[data-detail="${index + 1}"]`)
+      if (targetDetail) {
+        targetDetail.classList.add('active')
+      }
+    })
+  })
+
+  // Activate first layer by default
+  if (layers.length > 0 && details.length > 0) {
+    layers[0].classList.add('active')
+    details[0].classList.add('active')
+  }
+
+  // Mobile menu toggle
+  const menuToggle = document.querySelector('.mobile-menu-toggle')
+  const navLinks = document.querySelector('.nav-links')
   
-  window.addEventListener('scroll', () => {
-    const heroRect = hero.getBoundingClientRect()
-    if (heroRect.bottom < 60) {
-      nav.classList.add('scrolled')
-    } else {
-      nav.classList.remove('scrolled')
-    }
+  menuToggle?.addEventListener('click', () => {
+    navLinks?.classList.toggle('active')
+  })
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      e.preventDefault()
+      const target = document.querySelector(anchor.getAttribute('href') || '')
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    })
   })
 }
 

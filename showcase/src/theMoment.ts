@@ -7,6 +7,10 @@ const SPLITS = [
   { account: '1250', name: 'Employee Receivable', detail: 'Maya - Steam', amount: 113.44 }
 ]
 
+function formatCurrency(amount: number): string {
+  return '$' + amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 export function initTheMoment() {
   const bankLine = document.getElementById('bank-line')
   const cardsContainer = document.getElementById('split-cards')
@@ -35,8 +39,8 @@ export function initTheMoment() {
       <div class="split-card">
         <div class="split-account">${split.account}</div>
         <div class="split-name">${split.name}</div>
-        <div style="font-size: 0.85rem; color: var(--color-text-dim); margin-bottom: 0.5rem;">${split.detail}</div>
-        <div class="split-amount">$${split.amount.toFixed(2)}</div>
+        <div style="font-size: 0.85rem; color: var(--color-gray-600); margin-bottom: 0.5rem;">${split.detail}</div>
+        <div class="split-amount">${formatCurrency(split.amount)}</div>
       </div>
     `).join('')
     
@@ -81,23 +85,23 @@ export function initTheMoment() {
           ${SPLITS.map(split => `
             <tr>
               <td>${split.account} ${split.name}</td>
-              <td>$${split.amount.toFixed(2)}</td>
+              <td>${formatCurrency(split.amount)}</td>
               <td>—</td>
             </tr>
           `).join('')}
           <tr>
             <td>1010 Cash - Chase</td>
             <td>—</td>
-            <td>$${total.toFixed(2)}</td>
+            <td>${formatCurrency(total)}</td>
           </tr>
           <tr class="total-row">
             <td>Net Amount</td>
-            <td>$${total.toFixed(2)}</td>
-            <td>$${total.toFixed(2)}</td>
+            <td>${formatCurrency(total)}</td>
+            <td>${formatCurrency(total)}</td>
           </tr>
         </tbody>
       </table>
-      <div style="margin-top: 1rem; color: var(--color-success); text-align: center;">
+      <div class="status-row">
         <strong>✓ Balanced · Awaiting Controller Approval</strong>
       </div>
     `

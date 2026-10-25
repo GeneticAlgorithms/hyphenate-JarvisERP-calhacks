@@ -4,210 +4,342 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="JarvisERP - AI Staff Accountant for Month-End Close">
-  <title>JarvisERP | Cal Hacks 2026 - Hyphenate Track</title>
+  <title>JarvisERP | Autonomous Staff Accountant</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Fira+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/hyphenate-JarvisERP-calhacks/assets/index-GbuOQJfb.js"></script>
-  <link rel="modulepreload" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/three-KPuduYlR.js">
+  <script type="module" crossorigin src="/hyphenate-JarvisERP-calhacks/assets/index-BND4X5lF.js"></script>
+  <link rel="modulepreload" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/three-D8n-YDYp.js">
   <link rel="modulepreload" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/gsap-SFc2wnMY.js">
-  <link rel="stylesheet" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/index-eG6jl0C5.css">
+  <link rel="stylesheet" crossorigin href="/hyphenate-JarvisERP-calhacks/assets/index-kbSglCj3.css">
 </head>
 <body>
-  <!-- Sticky Navigation -->
-  <nav id="main-nav" class="main-nav">
-    <a href="#hero" class="nav-link">JarvisERP</a>
-    <div class="nav-links">
-      <a href="#the-moment" class="nav-link">The Moment</a>
-      <a href="#architecture" class="nav-link">Architecture</a>
-      <a href="#live-engine" class="nav-link">Live Engine</a>
-      <a href="#five-problems" class="nav-link">Problems</a>
-      <a href="#glossary" class="nav-link">Glossary</a>
+  <!-- Floating Glass Nav -->
+  <nav id="glass-nav" class="glass-nav">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">JarvisERP</a>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="#product" class="nav-link">Product</a>
+        <a href="#workflows" class="nav-link">Workflows</a>
+        <a href="#trust" class="nav-link">Trust</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="#live-engine" class="nav-link nav-cta">Try Live Engine</a>
+      </div>
     </div>
   </nav>
 
   <div id="app">
-    <!-- Hero Section -->
-    <section id="hero" class="section">
-      <canvas id="particle-canvas"></canvas>
+    <!-- Hero Section with WebGL Particle Sea -->
+    <section id="hero" class="hero-section">
+      <canvas id="particle-canvas" class="hero-canvas"></canvas>
       <div class="hero-content">
-        <h1 class="hero-title">JarvisERP</h1>
-        <p class="hero-pitch">An AI staff accountant that closes the books. It untangles messy bank lines with evidence, asks when unsure, takes a no, and can't approve its own work, with every action on a tamper-proof audit trail.</p>
-        <div class="hero-meta">
-          <span>Cal Hacks 2026 · Hyphenate Track</span>
-          <span>Alexander Le · UC Berkeley (solo project)</span>
+        <div class="hero-kicker">JarvisERP · Autonomous Staff Accountant</div>
+        <h1 class="hero-title">Close the month. <em>Prove every number.</em></h1>
+        <p class="hero-subtitle">AI that splits bank lines, asks when unsure, can't approve its own work, and logs every action on a tamper-proof audit trail.</p>
+        <div class="hero-actions">
+          <a href="#product" class="btn btn-primary">Watch the Demo</a>
+          <a href="#live-engine" class="btn btn-secondary">Try the Live Engine</a>
         </div>
       </div>
       <div id="hero-labels" class="hero-labels"></div>
     </section>
 
-    <!-- The Moment Section -->
-    <section id="the-moment" class="section">
-      <h2>The Moment</h2>
-      <p class="section-subtitle">Chase shows a PayPal transfer. QuickBooks suggests booking it all to Software. Jarvis digs deeper.</p>
-      <div class="moment-container">
-        <div id="bank-line" class="bank-line clickable">
-          <span class="bank-date">2026-09-30</span>
-          <span class="bank-desc">PAYPAL *INST XFER</span>
-          <span class="bank-amount">-$3,912.44</span>
+    <!-- Product Mock Section -->
+    <section id="product" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">One messy bank line. Four perfect splits.</h2>
+        <p class="section-subtitle">Watch Jarvis break down a $3,912.44 PayPal transfer, match it to evidence, and hand it to the controller for approval.</p>
+        
+        <div class="glass-app-window">
+          <div class="app-window-header">
+            <div class="app-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="app-title">JarvisERP · Chase x4471 · Sep 30, 2026</div>
+          </div>
+          <div class="app-window-content" id="product-demo">
+            <!-- Animated demo content -->
+          </div>
         </div>
-        <div id="split-cards" class="split-cards"></div>
-        <div id="balance-table" class="balance-table"></div>
+
+        <div class="workflow-steps">
+          <div class="workflow-step" data-step="1">
+            <div class="step-number">01</div>
+            <h3>Ingest</h3>
+            <p>Jarvis reads the bank line: PAYPAL *INST XFER −$3,912.44</p>
+          </div>
+          <div class="workflow-step" data-step="2">
+            <div class="step-number">02</div>
+            <h3>Propose Split</h3>
+            <p>Finds EUR crew deposit, wire fees, Claude API, and Maya's Steam purchase</p>
+          </div>
+          <div class="workflow-step" data-step="3">
+            <div class="step-number">03</div>
+            <h3>Controller Approves</h3>
+            <p>Human verification required—Jarvis can't approve its own entries (403)</p>
+          </div>
+          <div class="workflow-step" data-step="4">
+            <div class="step-number">04</div>
+            <h3>Trace to Audit</h3>
+            <p>Hash-chained log records actor, timestamp, amounts, and state transitions</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Architecture Section -->
-    <section id="architecture" class="section">
-      <h2>Architecture</h2>
-      <p class="section-subtitle">Five layers, one gatekeeper, zero shortcuts.</p>
-      <div id="arch-canvas-container">
-        <canvas id="arch-canvas"></canvas>
+    <!-- Built For Section -->
+    <section id="built-for" class="section">
+      <div class="container">
+        <h2 class="section-title">Built for accountants, controllers, and auditors</h2>
+        <div class="built-for-grid">
+          <div class="glass-card">
+            <div class="card-icon">👤</div>
+            <h3>Staff Accountant</h3>
+            <p>Propose splits with evidence. Challenge when something's unclear. Let the AI handle the tedious work.</p>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon">✓</div>
+            <h3>Controller</h3>
+            <p>Review and approve proposed entries. The system enforces your approval—Jarvis can't post without you.</p>
+          </div>
+          <div class="glass-card">
+            <div class="card-icon">🔍</div>
+            <h3>Auditor</h3>
+            <p>Trace every number to its source. Hash-chained audit log shows who did what, when, and with what evidence.</p>
+          </div>
+        </div>
       </div>
-      <div id="arch-info" class="arch-info"></div>
+    </section>
+
+    <!-- Workflows Tabs Section -->
+    <section id="workflows" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Four workflows. One engine.</h2>
+        <div class="segmented-tabs">
+          <button class="tab-button active" data-tab="reconcile">Reconcile</button>
+          <button class="tab-button" data-tab="split">Split</button>
+          <button class="tab-button" data-tab="challenge">Challenge</button>
+          <button class="tab-button" data-tab="inject">Scenario Injector</button>
+        </div>
+        
+        <div class="tab-content active" data-tab-content="reconcile">
+          <div class="glass-panel">
+            <h3>The Moment: $3,912.44 PayPal Split</h3>
+            <div class="moment-container">
+              <div id="bank-line" class="bank-line clickable">
+                <span class="bank-date">2026-09-30</span>
+                <span class="bank-desc">PAYPAL *INST XFER</span>
+                <span class="bank-amount">−$3,912.44</span>
+              </div>
+              <div id="split-cards" class="split-cards"></div>
+              <div id="balance-table" class="balance-table"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" data-tab-content="split">
+          <div class="glass-panel">
+            <p class="panel-description">Click the bank line above to see Jarvis split it into four accounts, balanced to the cent.</p>
+          </div>
+        </div>
+
+        <div class="tab-content" data-tab-content="challenge">
+          <div class="glass-panel">
+            <h3>Challenge & Defend</h3>
+            <div class="challenge-controls">
+              <button class="btn-challenge" data-challenge="materiality">Why not expense it all? Under materiality.</button>
+              <button class="btn-challenge" data-challenge="simpler">This seems overcomplicated.</button>
+              <button class="btn-challenge" data-challenge="timing">Can we book it next month?</button>
+            </div>
+            <textarea id="custom-challenge" placeholder="Or type your own challenge..."></textarea>
+            <button id="btn-custom-challenge" class="btn btn-secondary">Submit Challenge</button>
+            <div id="challenge-response" class="challenge-response"></div>
+          </div>
+        </div>
+
+        <div class="tab-content" data-tab-content="inject">
+          <div class="glass-panel">
+            <h3>Scenario Injector</h3>
+            <div class="scenario-controls">
+              <button class="btn-scenario" data-scenario="vendor-scam">Vendor Bank Change Scam</button>
+              <button class="btn-scenario" data-scenario="split-purchase">Split Purchases Under $2.5K</button>
+              <button class="btn-scenario" data-scenario="refund-revenue">Refund as Revenue</button>
+            </div>
+            <div id="scenario-output" class="scenario-output"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & Traceability Section -->
+    <section id="trust" class="section">
+      <div class="container">
+        <h2 class="section-title">Trust & traceability at every step</h2>
+        <p class="section-subtitle">Four layers of control, from the entry you propose to the audit log that records it.</p>
+        
+        <div class="trust-layout">
+          <div class="trust-layers">
+            <div class="glass-layer" data-layer="1">
+              <span class="layer-number">01</span>
+              <span class="layer-name">Gateway · Only Write Path</span>
+            </div>
+            <div class="glass-layer" data-layer="2">
+              <span class="layer-number">02</span>
+              <span class="layer-name">Roles Check · HTTP 403</span>
+            </div>
+            <div class="glass-layer" data-layer="3">
+              <span class="layer-number">03</span>
+              <span class="layer-name">State Machine · Approvals</span>
+            </div>
+            <div class="glass-layer" data-layer="4">
+              <span class="layer-number">04</span>
+              <span class="layer-name">Hash-Chained Audit Log</span>
+            </div>
+          </div>
+          
+          <div class="trust-details">
+            <div class="trust-detail active" data-detail="1">
+              <h3>Gateway · Only Write Path</h3>
+              <p>Every journal entry flows through a single gateway. No backdoors, no direct database writes, no shortcuts.</p>
+            </div>
+            <div class="trust-detail" data-detail="2">
+              <h3>Roles Check · HTTP 403</h3>
+              <p>Jarvis can't approve its own work. Try it in the live engine—self-approval returns HTTP 403 Forbidden.</p>
+            </div>
+            <div class="trust-detail" data-detail="3">
+              <h3>State Machine · Approvals</h3>
+              <p>Entries move through states: new → proposed → needs_info → approved → posted. Controllers gate the transition.</p>
+            </div>
+            <div class="trust-detail" data-detail="4">
+              <h3>Hash-Chained Audit Log</h3>
+              <p>SHA-256 append-only log. Tamper any row and verification shows exactly where the chain breaks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Live Engine Section -->
-    <section id="live-engine" class="section">
-      <h2>Live Engine</h2>
-      <p class="section-subtitle">In-browser simulation of the JarvisERP engine; the full Python backend lives in this repo.</p>
-      <div class="traceability-callout" style="max-width: 800px; margin: 0 auto 2rem; padding: 1rem 1.5rem; background: rgba(255, 122, 26, 0.1); border-left: 3px solid var(--color-orange); border-radius: 4px; font-size: 0.9rem; line-height: 1.7;">
-        <strong style="color: var(--color-orange);">Traceability:</strong> Every stage of work leaves an audit row. Each action appends to the hash-chained log with actor, timestamp, and data. Denied attempts (403 self-approval) and state transitions are logged. The chain is cryptographically verifiable—tamper any row and verification shows exactly where it breaks.
-      </div>
-      
-      <div class="engine-grid">
-        <!-- State Machine -->
-        <div class="engine-panel">
-          <h3>State Machine</h3>
-          <div id="state-display" class="state-display">new</div>
-          <div class="engine-controls">
-            <button id="btn-propose" class="btn-engine">Propose</button>
-            <button id="btn-ask" class="btn-engine" disabled>Ask Controller</button>
-            <button id="btn-approve-ctrl" class="btn-engine" disabled>Approve (Controller)</button>
-            <button id="btn-approve-jarvis" class="btn-engine" disabled>Approve (Jarvis)</button>
+    <section id="live-engine" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Live Engine</h2>
+        <p class="section-subtitle">In-browser simulation of the JarvisERP engine. The full Python backend lives in the repo.</p>
+        
+        <div class="engine-grid">
+          <!-- State Machine -->
+          <div class="glass-panel">
+            <h3>State Machine</h3>
+            <div id="state-display" class="state-display">new</div>
+            <div class="engine-controls">
+              <button id="btn-propose" class="btn btn-secondary">Propose</button>
+              <button id="btn-ask" class="btn btn-secondary" disabled>Ask Controller</button>
+              <button id="btn-approve-ctrl" class="btn btn-secondary" disabled>Approve (Controller)</button>
+              <button id="btn-approve-jarvis" class="btn btn-secondary" disabled>Approve (Jarvis)</button>
+            </div>
+            <div id="state-message" class="state-message"></div>
           </div>
-          <div id="state-message" class="state-message"></div>
-        </div>
 
-        <!-- Audit Log -->
-        <div class="engine-panel">
-          <h3>Hash-Chained Audit Log</h3>
-          <div id="audit-log" class="audit-log"></div>
-          <div class="engine-controls">
-            <button id="btn-tamper" class="btn-engine">Tamper Row 2</button>
-            <button id="btn-verify" class="btn-engine">Verify Chain</button>
+          <!-- Audit Log -->
+          <div class="glass-panel">
+            <h3>Hash-Chained Audit Log</h3>
+            <div id="audit-log" class="audit-log"></div>
+            <div class="engine-controls">
+              <button id="btn-tamper" class="btn btn-secondary">Tamper Row 2</button>
+              <button id="btn-verify" class="btn btn-secondary">Verify Chain</button>
+            </div>
+            <div id="verify-result" class="verify-result"></div>
           </div>
-          <div id="verify-result" class="verify-result"></div>
-        </div>
-
-        <!-- Challenge System -->
-        <div class="engine-panel">
-          <h3>Challenge & Defend</h3>
-          <div class="challenge-controls">
-            <button class="btn-challenge" data-challenge="materiality">Why not expense it all? Under materiality.</button>
-            <button class="btn-challenge" data-challenge="simpler">This seems overcomplicated.</button>
-            <button class="btn-challenge" data-challenge="timing">Can we book it next month?</button>
-          </div>
-          <textarea id="custom-challenge" placeholder="Or type your own challenge..."></textarea>
-          <button id="btn-custom-challenge" class="btn-engine">Submit Challenge</button>
-          <div id="challenge-response" class="challenge-response"></div>
-          <button id="btn-new-evidence" class="btn-engine">New Evidence (Triggers Concede)</button>
-        </div>
-
-        <!-- Scenario Injector -->
-        <div class="engine-panel">
-          <h3>Scenario Injector</h3>
-          <div class="scenario-controls">
-            <button class="btn-scenario" data-scenario="vendor-scam">Vendor Bank Change Scam</button>
-            <button class="btn-scenario" data-scenario="split-purchase">Split Purchases Under $2.5K</button>
-            <button class="btn-scenario" data-scenario="refund-revenue">Refund as Revenue</button>
-          </div>
-          <div id="scenario-output" class="scenario-output"></div>
         </div>
       </div>
     </section>
 
-    <!-- Five Problems Section -->
-    <section id="five-problems" class="section">
-      <h2>The Five Close Problems</h2>
-      <p class="section-subtitle" style="font-style: italic; color: var(--color-text-dim); margin-top: -1rem;">Inspired by my boyfriend, an accountant. Over dinner I kept hearing how stressful the month-end close is for him. These are the real pain points he deals with.</p>
-      <div class="problems-grid">
-        <div class="problem-card">
-          <div class="problem-number">01</div>
-          <h3>Timing & Accruals</h3>
-          <p>Matching revenue and expenses to the correct period, even when the invoice arrives late or early.</p>
-        </div>
-        <div class="problem-card">
-          <div class="problem-number">02</div>
-          <h3>Rolling Forward</h3>
-          <p>Creating the financial package on time with accurate comparisons to prior periods.</p>
-        </div>
-        <div class="problem-card">
-          <div class="problem-number">03</div>
-          <h3>Vague Bank Transactions</h3>
-          <p>Decoding cryptic bank descriptions to find the real vendor, account, and purpose.</p>
-        </div>
-        <div class="problem-card">
-          <div class="problem-number">04</div>
-          <h3>Filing Evidence</h3>
-          <p>Storing receipts, invoices, and approvals in a way that auditors (and future you) can actually find them.</p>
-        </div>
-        <div class="problem-card">
-          <div class="problem-number">05</div>
-          <h3>Duplicate Vendors</h3>
-          <p>One company, many names: Claude vs Anthropic, Cursor vs Anysphere, same vendor, different entries.</p>
+    <!-- Verifiable Stats Section -->
+    <section id="stats" class="section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">$3,912.44</div>
+            <div class="stat-label">Balanced to the cent</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">HTTP 403</div>
+            <div class="stat-label">On self-approval</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">4 accounts</div>
+            <div class="stat-label">From one bank line</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">SHA-256</div>
+            <div class="stat-label">Hash-chained log</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Real vs Simulated Section -->
-    <section id="real-vs-simulated" class="section">
-      <h2>Real vs Simulated</h2>
-      <div class="comparison-grid">
-        <div class="comparison-col">
-          <h3>Simulated</h3>
-          <ul>
-            <li>Afterglow Labs (fictional AV touring studio)</li>
-            <li>Chase, PayPal, Ramp transaction data</li>
-            <li>September 2026 month-end scenario</li>
-            <li>Maya's Steam purchase</li>
-            <li>EUR crew deposit</li>
-          </ul>
-        </div>
-        <div class="comparison-col">
-          <h3>Real Code</h3>
-          <ul>
-            <li>Single ledger gateway (only write path)</li>
-            <li>Role-based authorization (HTTP 403)</li>
-            <li>State machine (new → proposed → needs_info → approved → posted)</li>
-            <li>SHA-256 hash-chained audit log</li>
-            <li>Challenge/defend/concede with precedent recording</li>
-          </ul>
+    <!-- FAQ Section -->
+    <section id="faq" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Frequently asked questions</h2>
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <button class="faq-question">How is it audited?</button>
+            <div class="faq-answer">
+              <p>Every action appends to a SHA-256 hash-chained audit log with actor, timestamp, amounts, and state. Each row includes the hash of the previous row. Tamper with any entry and verification shows exactly where the chain breaks. Try it in the Live Engine.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Can the AI approve its own entries?</button>
+            <div class="faq-answer">
+              <p>No. The system enforces role-based authorization with HTTP 403. When Jarvis tries to approve its own proposed entry, the gateway returns "403 Forbidden: Jarvis cannot approve its own work." You can trigger this in the Live Engine state machine.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">What's real vs simulated?</button>
+            <div class="faq-answer">
+              <p><strong>Simulated:</strong> Afterglow Labs (fictional AV touring company), Chase/PayPal/Ramp transaction data, September 2026 scenario, Maya's Steam purchase, EUR crew deposit.</p>
+              <p><strong>Real code:</strong> Single ledger gateway (only write path), role-based authorization (HTTP 403), state machine (new → proposed → needs_info → approved → posted), SHA-256 hash-chained audit log, challenge/defend/concede with precedent recording.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">What models power this?</button>
+            <div class="faq-answer">
+              <p>Built with Cursor (Claude Sonnet 4.5) and Grok Bot during Cal Hacks 2026. The showcase uses TypeScript + Three.js + GSAP for the frontend demos. The full Python backend (state machine, audit log, challenge system) lives in the GitHub repo.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Glossary Section -->
     <section id="glossary" class="section">
-      <h2>Glossary</h2>
-      <input type="text" id="glossary-search" placeholder="Search terms..." class="glossary-search">
-      <div id="glossary-grid" class="glossary-grid"></div>
+      <div class="container">
+        <h2 class="section-title">Glossary</h2>
+        <input type="text" id="glossary-search" placeholder="Search terms..." class="glossary-search">
+        <div id="glossary-grid" class="glossary-grid"></div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-team">
-          <h3>Built Solo</h3>
-          <p><strong>Built Solo by Alexander Le · with Cursor and Grok Bot</strong></p>
-          <p style="margin-top: 0.5rem;">UC Berkeley · Applied Math, Statistics & Philosophy</p>
-        </div>
-        <div class="footer-links">
-          <h3>Project</h3>
-          <a href="https://github.com/GeneticAlgorithms/hyphenate-JarvisERP-calhacks" target="_blank" rel="noopener">GitHub Repository</a>
-        </div>
-        <div class="footer-tech">
-          <h3>Built With</h3>
-          <p>Vite · TypeScript · Three.js · GSAP · WebCrypto</p>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-main">
+            <h3>Built Solo</h3>
+            <p><strong>Built Solo by Alexander Le · with Cursor and Grok Bot</strong></p>
+            <p>UC Berkeley · Applied Math, Statistics & Philosophy</p>
+            <p style="margin-top: 1rem; font-style: italic;">Inspired by my boyfriend, an accountant. Over dinner I kept hearing how stressful the month-end close is for him. These are the real pain points he deals with.</p>
+          </div>
+          <div class="footer-links">
+            <h3>Project</h3>
+            <a href="https://github.com/GeneticAlgorithms/hyphenate-JarvisERP-calhacks" target="_blank" rel="noopener">GitHub Repository</a>
+            <p style="margin-top: 1rem;">Cal Hacks 2026 · Hyphenate Track</p>
+          </div>
         </div>
       </div>
     </footer>
