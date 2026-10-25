@@ -28,6 +28,7 @@ TABS = [
 class TestWorkbenchRun:
     """Test /api/wb/run for each tab."""
     
+    @pytest.mark.slow
     def test_p1_timing(self, client):
         """Test P1 Timing tab runs without failure."""
         resp = client.post("/api/wb/run", json={"agent": "p1_timing"})
@@ -90,6 +91,7 @@ class TestWorkbenchRun:
 class TestWorkbenchValidation:
     """Additional validation tests."""
     
+    @pytest.mark.slow
     def test_all_tabs_complete(self, client):
         """Test that all 5 tabs can complete successfully."""
         results = {}

@@ -239,11 +239,25 @@ def _is_personal(ctx: Ctx, name: str, item_text: str, mcc: str = "") -> tuple[bo
     if not pol:
         precs = ctx.precedents("personal")
         if precs:
-            # Use the decision from the most recent precedent
-            latest = precs[-1]
-            decision = latest.get("decision", {})
-            mccs = set(decision.get("personal_mccs", []))
-            kws = decision.get("personal_merchant_keywords", [])
+            # Merge keywords and MCCs from ALL personal precedents
+            mccs = set()
+            kws = []
+            for prec in precs:
+                decision = prec.get("decision", {})
+                # Handle both dict and JSON string
+                if isinstance(decision, str):
+                    import json
+                    try:
+                        decision = json.loads(decision)
+                    except:
+                        decision = {}
+                if decision:
+                    prec_mccs = decision.get("personal_mccs", [])
+                    prec_kws = decision.get("personal_merchant_keywords", [])
+                    mccs.update(prec_mccs if prec_mccs else [])
+                    kws.extend(prec_kws if prec_kws else [])
+            # Dedupe keywords
+            kws = list(set(kws))
     
     text = norm(f"{name} {item_text}")
     if mcc and mcc in mccs:
