@@ -1,8 +1,4 @@
 import * as THREE from 'three'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
-import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 
 // Simplified particle sea adapted from Alexander's animation
 const SINGLES = ['0','1','2','3','4','5','6','7','8','9','$','.','-','+',',','?','✓','·','→']
@@ -58,12 +54,35 @@ function buildAtlas() {
   return tex
 }
 
+function getRendererInfo(gl: WebGLRenderingContext | WebGL2RenderingContext): string {
+  const debugInfo = gl.getExtension('WEBGL_debug_renderer_info')
+  if (debugInfo) {
+    const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+    return renderer.toLowerCase()
+  }
+  return ''
+}
+
+function isSoftwareRenderer(gl: WebGLRenderingContext | WebGL2RenderingContext): boolean {
+  const info = getRendererInfo(gl)
+  return info.includes('swiftshader') || info.includes('llvmpipe') || info.includes('software')
+}
+
 export function initParticleSea() {
   const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement
   if (!canvas) return
 
   const isMobile = window.innerWidth < 768
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  // Check for software renderer
+  const testCanvas = document.createElement('canvas')
+  const testGL = (testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl')) as WebGLRenderingContext | null
+  
+  if (!testGL || isSoftwareRenderer(testGL) || prefersReducedMotion) {
+    showStaticFallback(canvas)
+    return
+  }
 
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 100)
@@ -73,34 +92,30 @@ export function initParticleSea() {
   const renderer = new THREE.WebGLRenderer({ 
     canvas, 
     alpha: true, 
-    antialias: !isMobile,
-    powerPreference: isMobile ? 'low-power' : 'high-performance'
+    antialias: false,
+    powerPreference: 'low-power'
   })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2))
+  // Clamp pixel ratio to 1.5 max
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setClearColor(0x000000, 0)
 
-  const composer = new EffectComposer(renderer)
-  composer.setPixelRatio(renderer.getPixelRatio())
-  composer.setSize(window.innerWidth, window.innerHeight)
-  composer.addPass(new RenderPass(scene, camera))
-  
-  const bloom = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    isMobile ? 0.5 : 0.95,
-    0.5,
-    0.22
-  )
-  composer.addPass(bloom)
-  composer.addPass(new OutputPass())
-
-  // Build particle system
-  const GX = isMobile ? 48 : 64
-  const GZ = isMobile ? 64 : 96
+  // Drastically reduce particle count: 1500 desktop / 600 mobile
+  const MAX_PARTICLES = isMobile ? 600 : 1500
+  const GX = isMobile ? 24 : 40
+  const GZ = isMobile ? 25 : 38
   const SX = 0.42
   const SZ = 0.22
   const Z0 = 5.2
-  const N = GX * GZ
+  let N = GX * GZ
+  
+  // Ensure we don't exceed max
+  if (N > MAX_PARTICLES) {
+    const scale = Math.sqrt(MAX_PARTICLES / N)
+    const newGX = Math.floor(GX * scale)
+    const newGZ = Math.floor(GZ * scale)
+    N = newGX * newGZ
+  }
 
   const atlas = buildAtlas()
   const grid = new Float32Array(N * 3)
@@ -248,27 +263,83 @@ export function initParticleSea() {
     })
   }
 
+  // FPS monitoring for adaptive quality
+  let frameCount = 0
+  let lastTime = performance.now()
+  let avgFPS = 60
+  let qualityLevel = 1.0
+  let particleQualityReduced = false
+
+  function measureFPS() {
+    frameCount++
+    const now = performance.now()
+    if (now - lastTime >= 1000) {
+      avgFPS = frameCount
+      frameCount = 0
+      lastTime = now
+
+      // Adaptive quality after 1 second
+      if (now > 1000 && !particleQualityReduced) {
+        if (avgFPS < 30) {
+          qualityLevel = 0.5
+          particleQualityReduced = true
+          console.log('Reducing particle quality: FPS', avgFPS)
+        }
+        
+        if (avgFPS < 20) {
+          // Fall back to static
+          showStaticFallback(canvas)
+          isAnimating = false
+          console.log('Falling back to static: FPS', avgFPS)
+        }
+      }
+    }
+  }
+
   // Animation
   let time = 0
   let scrollProgress = 0
-  let isAnimating = !prefersReducedMotion
+  let isAnimating = true
+  let isPaused = false
 
   function animate() {
+    if (!isAnimating) return
+    
     requestAnimationFrame(animate)
     
-    if (isAnimating) {
-      time += prefersReducedMotion ? 0 : 0.016
+    if (!isPaused) {
+      time += 0.016
+      measureFPS()
     }
 
     const u = mat.uniforms
     u.uTime.value = time
-    u.uBlob.value = 1.0 - scrollProgress * 0.6
+    u.uBlob.value = (1.0 - scrollProgress * 0.6) * qualityLevel
     u.uScroll.value = scrollProgress
 
-    composer.render()
+    renderer.render(scene, camera)
   }
 
-  animate()
+  // Lazy init - start after first paint
+  requestIdleCallback(() => {
+    animate()
+  })
+
+  // Pause when hero is off-screen
+  const hero = document.getElementById('hero')
+  if (hero && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isPaused = !entry.isIntersecting
+      })
+    })
+    observer.observe(hero)
+  }
+
+  // Pause when tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    isPaused = document.hidden
+  })
 
   // Scroll interaction
   window.addEventListener('scroll', () => {
@@ -284,6 +355,36 @@ export function initParticleSea() {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
-    composer.setSize(window.innerWidth, window.innerHeight)
   })
+}
+
+function showStaticFallback(canvas: HTMLCanvasElement) {
+  // Draw static gradient with some text elements
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  // Black background with subtle gradient
+  const gradient = ctx.createRadialGradient(
+    canvas.width / 2, canvas.height / 2, 0,
+    canvas.width / 2, canvas.height / 2, canvas.width * 0.7
+  )
+  gradient.addColorStop(0, '#1a0a00')
+  gradient.addColorStop(1, '#000000')
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+  // Add some static glyphs
+  ctx.font = '16px Fira Mono'
+  ctx.fillStyle = 'rgba(255, 122, 26, 0.3)'
+  const glyphs = ['$3,912.44', '1310', 'DR', 'CR', '403', 'SHA-256', 'GL', 'AP']
+  
+  for (let i = 0; i < 20; i++) {
+    const x = Math.random() * canvas.width
+    const y = Math.random() * canvas.height
+    const glyph = glyphs[Math.floor(Math.random() * glyphs.length)]
+    ctx.fillText(glyph, x, y)
+  }
 }

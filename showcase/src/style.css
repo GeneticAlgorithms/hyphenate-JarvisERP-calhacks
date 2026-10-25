@@ -264,8 +264,7 @@ body {
 }
 
 .btn-secondary {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   color: var(--color-black);
   border: 1px solid var(--glass-border);
 }
@@ -305,12 +304,11 @@ body {
 
 /* Glass Cards */
 .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
+  box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
 }
 
@@ -339,12 +337,11 @@ body {
 
 /* Glass Panel */
 .glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
+  box-shadow: var(--shadow-md);
 }
 
 .glass-panel h3 {
@@ -362,12 +359,11 @@ body {
 
 /* Glass App Window */
 .glass-app-window {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: var(--shadow-xl), inset 0 1px 0 var(--glass-highlight);
+  box-shadow: var(--shadow-xl);
   margin-bottom: 4rem;
 }
 
@@ -576,8 +572,7 @@ body {
 
 .split-card {
   padding: 1.5rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   box-shadow: var(--shadow-sm);
@@ -672,8 +667,7 @@ body {
 }
 
 .glass-layer {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 1.5rem;
@@ -912,8 +906,7 @@ body {
 }
 
 .faq-item {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   margin-bottom: 1rem;
@@ -981,8 +974,7 @@ body {
   max-width: 600px;
   margin: 0 auto 3rem;
   padding: 1rem 1.5rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 100px;
   font-family: 'Fira Mono', monospace;
@@ -1003,8 +995,7 @@ body {
 }
 
 .glossary-term {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 1.5rem;
