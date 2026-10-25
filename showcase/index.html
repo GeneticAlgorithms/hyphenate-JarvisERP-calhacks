@@ -61,8 +61,11 @@
     <!-- Product Demo Section -->
     <section id="product" class="section">
       <div class="container">
-        <h2 class="section-title">One messy bank line. Four perfect splits.</h2>
-        <p class="section-subtitle">Watch Jarvis break down a $3,912.44 PayPal transfer, match it to evidence, and hand it to the controller for approval.</p>
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">The Moment</div>
+          <h2 class="section-title">One messy bank line. Four perfect splits.</h2>
+          <p class="section-subtitle">Watch Jarvis break down a $3,912.44 PayPal transfer, match it to evidence, and hand it to the controller for approval.</p>
+        </div>
         
         <div class="demo-window">
           <div class="demo-header">
@@ -106,9 +109,12 @@
     </section>
 
     <!-- Built For Section -->
-    <section id="built-for" class="section section-tint">
+    <section id="built-for" class="section sec-tint">
       <div class="container">
-        <h2 class="section-title">Built for accountants, controllers, and auditors</h2>
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">Built For</div>
+          <h2 class="section-title">Built for accountants, controllers, and auditors</h2>
+        </div>
         <div class="built-for-grid">
           <div class="simple-card">
             <h3>Staff Accountant</h3>
@@ -129,8 +135,11 @@
     <!-- Five Problems Section -->
     <section id="five-problems" class="section">
       <div class="container">
-        <h2 class="section-title">The five close problems</h2>
-        <p class="section-subtitle" style="font-style: italic;">Inspired by my boyfriend, an accountant. These are the real pain points he deals with.</p>
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">Five Problems</div>
+          <h2 class="section-title">Five problems. One accountable close.</h2>
+          <p class="section-subtitle" style="font-style: italic;">Inspired by my boyfriend, an accountant. These are the real pain points he deals with.</p>
+        </div>
         <div class="problems-grid">
           <div class="problem-card">
             <div class="problem-num">01</div>
@@ -144,7 +153,7 @@
           </div>
           <div class="problem-card">
             <div class="problem-num">03</div>
-            <h3>Vague Bank Transactions</h3>
+            <h3>Vague Bank Lines</h3>
             <p>Decoding cryptic bank descriptions to find the real vendor, account, and purpose.</p>
           </div>
           <div class="problem-card">
@@ -162,17 +171,22 @@
     </section>
 
     <!-- Workflows Section -->
-    <section id="workflows" class="section section-tint">
+    <section id="workflows" class="section sec-tint">
       <div class="container">
-        <h2 class="section-title">Four workflows</h2>
-        <div class="workflow-tabs">
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">Workflows</div>
+          <h2 class="section-title">Three workflows. Rooted in evidence.</h2>
+          <p class="section-subtitle">Split, challenge, and simulate. Every number backed by a source.</p>
+        </div>
+        
+        <div class="w-seg">
           <button class="workflow-tab active" data-tab="split">Split</button>
           <button class="workflow-tab" data-tab="challenge">Challenge</button>
           <button class="workflow-tab" data-tab="scenario">Scenarios</button>
         </div>
         
         <div class="workflow-content active" data-content="split">
-          <div class="workflow-panel">
+          <div class="w-frame">
             <h3>The Moment: $3,912.44 Split</h3>
             <div id="bank-line" class="bank-line clickable">
               <span class="bank-date">2026-09-30</span>
@@ -181,11 +195,12 @@
             </div>
             <div id="split-cards" class="split-cards"></div>
             <div id="balance-table" class="balance-table"></div>
+            <div class="w-seek"><div class="w-seek-bar" style="width: 75%;"></div></div>
           </div>
         </div>
 
         <div class="workflow-content" data-content="challenge">
-          <div class="workflow-panel">
+          <div class="w-frame">
             <h3>Challenge & Defend</h3>
             <div class="challenge-btns">
               <button class="btn-challenge" data-challenge="materiality">Why not expense it all? Under materiality.</button>
@@ -195,11 +210,12 @@
             <textarea id="custom-challenge" placeholder="Or type your own challenge..."></textarea>
             <button id="btn-custom-challenge" class="btn btn-small">Submit Challenge</button>
             <div id="challenge-response" class="challenge-response"></div>
+            <div class="w-seek"><div class="w-seek-bar" style="width: 0%;"></div></div>
           </div>
         </div>
 
         <div class="workflow-content" data-content="scenario">
-          <div class="workflow-panel">
+          <div class="w-frame">
             <h3>Scenario Injector</h3>
             <div class="scenario-btns">
               <button class="btn-scenario" data-scenario="vendor-scam">Vendor Bank Change Scam</button>
@@ -207,6 +223,7 @@
               <button class="btn-scenario" data-scenario="refund-revenue">Refund as Revenue</button>
             </div>
             <div id="scenario-output" class="scenario-output"></div>
+            <div class="w-seek"><div class="w-seek-bar" style="width: 0%;"></div></div>
           </div>
         </div>
       </div>
@@ -215,27 +232,57 @@
     <!-- Trust & Traceability Section -->
     <section id="trust" class="section">
       <div class="container">
-        <h2 class="section-title">Trust & traceability at every step</h2>
-        <p class="section-subtitle">Four layers of control, from entry to audit log.</p>
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">Trust & Traceability</div>
+          <h2 class="section-title">Your evidence is protected at every step</h2>
+          <p class="section-subtitle">Four layers of control, from entry to audit log.</p>
+        </div>
         
-        <div class="trust-stack">
-          <div class="trust-layer">01 · Gateway · Only Write Path</div>
-          <div class="trust-layer">02 · Roles Check · HTTP 403</div>
-          <div class="trust-layer">03 · State Machine · Approvals</div>
-          <div class="trust-layer">04 · Hash-Chained Audit Log</div>
+        <div class="trust-grid">
+          <div class="trust-item">
+            <div class="trust-icon">01</div>
+            <div class="trust-content">
+              <h4>Jarvis can't approve its own work</h4>
+              <p>When the AI tries to approve its own entry, the gateway returns "403 Forbidden".</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">02</div>
+            <div class="trust-content">
+              <h4>Every action is hash-chained</h4>
+              <p>SHA-256 audit log links each entry. Tamper any row and the chain verification shows exactly where it breaks.</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">03</div>
+            <div class="trust-content">
+              <h4>Every number traces to a source line</h4>
+              <p>Click any split to see the bank line, memo, amount, and attached receipt that support it.</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">04</div>
+            <div class="trust-content">
+              <h4>Synthetic data, real controls</h4>
+              <p>Afterglow Labs is fictional so no client's books are exposed, but the code is real: single gateway, role checks, state machine, SHA-256 audit log.</p>
+            </div>
+          </div>
         </div>
 
         <div class="trust-note">
-          <p><strong>Synthetic but realistic:</strong> The demo uses fictional data (Afterglow Labs, Sep 2026 scenario), but the code is real: single gateway, role checks, state machine, SHA-256 hash-chained audit log.</p>
+          <p><strong>Why this matters:</strong> The demo uses fictional data (Afterglow Labs, Sep 2026 scenario), but the controls are production-grade: single ledger gateway, HTTP 403 denial, state machine, and tamper-evident audit log.</p>
         </div>
       </div>
     </section>
 
     <!-- Live Demo Section -->
-    <section id="demo" class="section section-tint">
+    <section id="demo" class="section sec-tint">
       <div class="container">
-        <h2 class="section-title">Live Demo</h2>
-        <p class="section-subtitle">In-browser simulation. Try the 403 denial and tamper detection.</p>
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">Live Demo</div>
+          <h2 class="section-title">Try the 403 denial and tamper detection</h2>
+          <p class="section-subtitle">In-browser simulation. No backend required.</p>
+        </div>
         
         <div class="demo-grid">
           <div class="demo-panel">
@@ -265,7 +312,10 @@
     <!-- Real vs Simulated Section -->
     <section id="real-vs-simulated" class="section">
       <div class="container">
-        <h2 class="section-title">Real vs Simulated</h2>
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">Real vs Simulated</div>
+          <h2 class="section-title">Real controls. Synthetic data.</h2>
+        </div>
         <div class="real-vs-grid">
           <div class="real-vs-col">
             <h3>Simulated</h3>
@@ -294,9 +344,12 @@
     </section>
 
     <!-- Glossary Section -->
-    <section id="glossary" class="section section-tint">
+    <section id="glossary" class="section sec-tint">
       <div class="container">
-        <h2 class="section-title">Glossary</h2>
+        <div class="section-header">
+          <div class="kicker" style="justify-content: center;">Glossary</div>
+          <h2 class="section-title">Accounting terms, decoded</h2>
+        </div>
         <input type="text" id="glossary-search" placeholder="Search terms..." class="glossary-search">
         <div id="glossary-grid" class="glossary-grid"></div>
       </div>
@@ -305,8 +358,12 @@
     <!-- FAQ Section -->
     <section id="faq" class="section">
       <div class="container">
-        <h2 class="section-title">Frequently asked questions</h2>
-        <div class="faq-list">
+        <div class="faq-grid">
+          <div class="faq-intro">
+            <h2>Frequently asked questions</h2>
+            <p>Common questions about Jarvis, the controls, and the demo data.</p>
+          </div>
+          <div class="faq-list">
           <div class="faq-item">
             <button class="faq-q">How is it audited?</button>
             <div class="faq-a">
@@ -334,6 +391,7 @@
               <p>Built with Cursor (Claude Sonnet 4.5) and Grok Bot during Cal Hacks 2026. TypeScript + Three.js + GSAP for demos. Python backend in the repo.</p>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

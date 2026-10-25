@@ -10,6 +10,7 @@ function init() {
   initUI()
   initDemoAnimation()
   initVideoHero()
+  initRevealOnScroll()
 }
 
 function initUI() {
@@ -182,6 +183,42 @@ function initVideoHero() {
     })
     observer.observe(hero)
   }
+}
+
+function initRevealOnScroll() {
+  if (!('IntersectionObserver' in window)) return
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (prefersReducedMotion) return
+
+  const sections = document.querySelectorAll('.section:not(.hero-section)')
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal', 'visible')
+        
+        const cards = entry.target.querySelectorAll('.problem-card, .trust-item, .simple-card, .demo-panel, .real-vs-col, .glossary-term')
+        cards.forEach((card, i) => {
+          if (i < 5) {
+            card.classList.add('reveal', `delay-${Math.min(i, 4)}`)
+            setTimeout(() => {
+              card.classList.add('visible')
+            }, 50)
+          } else {
+            card.classList.add('reveal', 'visible')
+          }
+        })
+      }
+    })
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -80px 0px'
+  })
+
+  sections.forEach(section => {
+    observer.observe(section)
+  })
 }
 
 // Initialize when DOM is ready
